@@ -36,7 +36,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-white cursor-pointer hover:text-primary transition-all"
+              className="size-6 text-white cursor-pointer hover:text-primary transition-all mobile:hidden"
             >
               <path
                 strokeLinecap="round"
@@ -52,7 +52,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 text-white cursor-pointer hover:text-rose-500 transition-all"
+              className="size-6 text-white cursor-pointer hover:text-rose-500 transition-all mobile:hidden"
             >
               <path
                 strokeLinecap="round"

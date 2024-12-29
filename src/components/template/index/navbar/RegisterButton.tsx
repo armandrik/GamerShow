@@ -3,10 +3,10 @@ import React from "react";
 
 function RegisterButton() {
   return (
-    <button className="w-32 h-10 text-white bg-primary rounded-md font-medium hover:bg-primary/80 transition-all mobile:w-28 mobile:h-8 mobile:text-sm">
+    <button className="w-32 h-10 text-white bg-primary rounded-md font-medium hover:bg-primary/80 transition-all mobile:w-28 mobile:h-9 mobile:text-base">
       <Link
         href="/login-register"
-        className="flex items-center justify-center gap-2"
+        className="flex items-center justify-center gap-2 mobile:gap-1"
       >
         ثبت‌نام
         <svg
@@ -15,7 +15,7 @@ function RegisterButton() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 mobile:size-5"
+          className="size-6"
         >
           <path
             strokeLinecap="round"

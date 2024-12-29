@@ -13,7 +13,7 @@ const Banner: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const [direction, setDirection] = useState<"top" | "bottom">("bottom"); // Direction of animation
-  // const [startY, setStartY] = useState<number | null>(null);
+  const [startY, setStartY] = useState<number | null>(null);
 
   const autoplayRef = useRef<NodeJS.Timeout | null>(null); // Ref to store autoplay interval
 
@@ -49,22 +49,22 @@ const Banner: React.FC = () => {
     resetAutoplay();
   };
 
-  // const handleTouchStart = (e: React.TouchEvent) => {
-  //   setStartY(e.touches[0].clientY); // Save the starting touch position
-  //   resetAutoplay();
-  // };
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY); // Save the starting touch position
+    resetAutoplay();
+  };
 
-  // const handleTouchEnd = (e: React.TouchEvent) => {
-  //   if (startY === null) return;
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (startY === null) return;
 
-  //   const endY = e.changedTouches[0].clientY; // Capture the ending touch position
-  //   const diff = startY - endY; // Calculate the swipe distance
+    const endY = e.changedTouches[0].clientY; // Capture the ending touch position
+    const diff = startY - endY; // Calculate the swipe distance
 
-  //   if (diff > 50) nextSlide(); // Swipe left
-  //   if (diff < -50) prevSlide(); // Swipe right
+    if (diff > 50) nextSlide(); // Swipe left
+    if (diff < -50) prevSlide(); // Swipe right
 
-  //   setStartY(null); // Reset the touch position
-  // };
+    setStartY(null); // Reset the touch position
+  };
 
   // Autoplay setup
   useEffect(() => {
@@ -79,8 +79,8 @@ const Banner: React.FC = () => {
     <div className="px-[100px] text-center overflow-hidden desktop:px-12 mobile:px-4 mobile:pt-1">
       <div className="flex flex-row-reverse gap-4 items-center justify-between mobile:flex-col-reverse">
         <div
-          // onTouchStart={handleTouchStart}
-          // onTouchEnd={handleTouchEnd}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           className="relative w-full h-[550px] overflow-hidden rounded-3xl"
         >
           {/* Slides */}
@@ -99,7 +99,7 @@ const Banner: React.FC = () => {
             />
           ))}
         </div>
-        <div className="flex flex-col justify-start items-center gap-4 mobile:flex-row mobile:gap-2 mobile:w-[90%] mobile:pl-5">
+        <div className="flex flex-col justify-start items-center gap-4 mobile:flex-row mobile:gap-2 mobile:w-[99%] mobile:pl-5">
           <button
             onClick={prevSlide}
             className="p-2 z-10 bg-primary text-white rounded-full shadow hover:bg-primary/80 transition-colors mobile:hidden"
@@ -125,7 +125,7 @@ const Banner: React.FC = () => {
               src={item}
               alt="image gallery"
               onClick={() => applyCurrentSlide(index)}
-              className={`w-28 h-16 rounded-lg border-[3px] cursor-pointer hover:border-primary hover:scale-110 transition-all mobile:rounded mobile:w-1/4 mobile:h-auto mobile:border-[2px] ${
+              className={`w-28 h-16 rounded-lg cursor-pointer border-[3px] transition-all mobile:rounded mobile:w-1/4 mobile:h-auto mobile:border-[2px] ${
                 index === currentSlide ? "scale-110 border-violet-500" : "border-transparent"
               }`}
             />

@@ -3,7 +3,7 @@ import React from "react";
 
 function DropDown() {
   return (
-    <div className="absolute z-20 right-0 mt-1 w-40 [&>p]:text-zinc-300 bg-secondary rounded-md shadow-md opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition duration-200 ease-in-out pointer-events-none group-hover:pointer-events-auto mobile:-right-12">
+    <div className="absolute z-20 right-0 mt-1 w-40 [&>p]:text-zinc-300 bg-secondary rounded-md shadow-md mobile:-right-4">
       <p className="px-4 py-2 text-sm cursor-pointer">
         <Link
           href="/p-user/orders"
