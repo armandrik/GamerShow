@@ -4,10 +4,10 @@ import BannerBlog from "./BannerBlog";
 
 const Banner: React.FC = () => {
   const slides: string[] = [
-    "https://media.rawg.io/media/games/2e7/2e732a02c29c84ca177855848932a5aa.jpg",
-    "https://media.rawg.io/media/games/d97/d97f663b752a6484df105993f17abb49.jpg",
     "https://media.rawg.io/media/games/f24/f2493ea338fe7bd3c7d73750a85a0959.jpeg",
     "https://media.rawg.io/media/games/708/7080e6c87e0825cb02888bf3c44b3889.jpg",
+    'https://media.rawg.io/media/screenshots/629/62953e3a32d446537a3a1fda04c6510e.jpg',
+    "https://media.rawg.io/media/games/275/2759da6fcaa8f81f21800926168c85f6.jpg",
   ];
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
