@@ -1,13 +1,27 @@
-"use client"
+"use client";
 import React from "react";
 
-function ScrollArrows() {
+type scrollArrowPropType = {
+  elementId: string;
+};
+
+function ScrollArrows({ elementId }: scrollArrowPropType) {
   const scrollLeft = () => {
-    document.getElementById("scrollContainer")!.scrollLeft += 300;
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollLeft += 300; // Scroll left
+    } else {
+      console.error(`Element with id "${elementId}" not found.`);
+    }
   };
 
   const scrollRight = () => {
-    document.getElementById("scrollContainer")!.scrollLeft -= 300;
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollLeft -= 300; // Scroll right
+    } else {
+      console.error(`Element with id "${elementId}" not found.`);
+    }
   };
 
   return (

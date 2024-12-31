@@ -6,7 +6,7 @@ import React from "react";
 
 function Navbar() {
   return (
-    <nav className="px-[100px] mt-16 mb-11 desktop:px-12 tablet:mt-5 mobile:px-4">
+    <nav className="px-12 mt-16 mb-11 tablet:mt-5 mobile:px-4">
       <main className="flex justify-between items-center">
         <div className="flex items-center justify-start gap-7 tablet:gap-3 mobile:gap-1">
           <svg

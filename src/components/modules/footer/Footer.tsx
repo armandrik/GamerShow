@@ -4,7 +4,7 @@ import Articles from "./Articles";
 
 function Footer() {
   return (
-    <div className="px-[100px] py-16 bg-zinc-700/60 flex items-start justify-start flex-wrap gap-12 text-white desktop:px-12 mobile:px-4 mobile:py-10 mobile:gap-9">
+    <div className="px-12 py-16 bg-zinc-700/60 flex items-start justify-start flex-wrap gap-12 text-white mobile:px-4 mobile:py-10 mobile:gap-9">
       <div className="mobile:w-full">
         <h2 className="text-xl font-bold mb-8 mobile:text-lg">داغترین مطالب هفته</h2>
         <Articles />

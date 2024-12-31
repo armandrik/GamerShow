@@ -10,14 +10,14 @@ function Product() {
       />
       <p className="text-white text-lg px-7 pt-7 mb-4 cursor-pointer pointer-events-auto transition-all mobile:text-base mobile:px-3 mobile:pt-3 mobile:leading-7">
         <Link href="/category/id">
-          بازی Elden Ring برای کنسول پلی استیشن ۵
+          بازی Grand Theft Auto VI برای کنسول پلی استیشن ۵
         </Link>
       </p>
       <p className="text-font text-lg px-7 pb-7 text-center mobile:text-base mobile:px-3 mobile:pb-3">
         قیمت ۴/۵۰۰ هزار تومان
       </p>
       <div className="border-t border-zinc-700/50 flex items-center pt-3 justify-between shadow-card">
-        <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-rose-400/90 p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-white hover:text-rose-500 transition-all mobile:p-3 mobile:w-28 mobile:text-sm">
+        <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-rose-400/90 p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-white hover:text-orange-500 transition-all mobile:p-3 mobile:w-28 mobile:text-sm">
           افزودن به
           <svg
             xmlns="http://www.w3.org/2000/svg"

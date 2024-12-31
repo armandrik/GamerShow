@@ -76,7 +76,7 @@ const Banner: React.FC = () => {
   }, []);
 
   return (
-    <div className="px-[100px] text-center overflow-hidden desktop:px-12 mobile:px-4 mobile:pt-1">
+    <div className="px-12 text-center overflow-hidden mobile:px-4 mobile:pt-1">
       <div className="flex flex-row-reverse gap-4 items-center justify-between mobile:flex-col-reverse">
         <div
           onTouchStart={handleTouchStart}

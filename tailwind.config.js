@@ -22,7 +22,8 @@ module.exports = {
       },
       boxShadow: {
         'card': '0px 35px 55px 0px #FF754C',
-      }
+        "articel" : "inset 0px -455px 460px -210px #000000ba;"
+      },
     },
   },
   plugins: [],
