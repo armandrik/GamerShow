@@ -1,5 +1,4 @@
-"use client"
-import Link from "next/link";
+"use client";
 import React, { useState } from "react";
 import DropDown from "./DropDown";
 
@@ -7,29 +6,21 @@ function AccountButton() {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
   return (
-    <div className="relative w-36 h-10 rounded-md bg-primary hover:bg-primary/80 transition-all mobile:w-36 mobile:h-9 mobile:text-base">
-      <h1
-        onClick={() => setShowDropDown(!showDropDown)}
-        className="font-medium text-center h-10 text-white flex items-center gap-1 justify-center mobile:h-9"
+    <div onClick={() => setShowDropDown(!showDropDown)} className="relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-primary hover:bg-primary/80 transition-all">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="size-6 text-white"
       >
-        <Link href="/">حساب کاربری</Link>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-5 transition-all ${
-            showDropDown ? "rotate-180" : ""
-          }`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m19.5 8.25-7.5 7.5-7.5-7.5"
-          />
-        </svg>
-      </h1>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+        />
+      </svg>
       {showDropDown && <DropDown />}
     </div>
   );
