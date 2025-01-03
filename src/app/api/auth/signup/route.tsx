@@ -1,6 +1,12 @@
 import { NextRequest } from "next/server";
 import connectedToDB from "../../../../../config/db";
-import { generateAccessToken, hashPassword, isValidEmail } from "@/utils/auth";
+import {
+  generateAccessToken,
+  hashPassword,
+  isValidEmail,
+  isValidPassword,
+  isValidUserName,
+} from "@/utils/auth";
 import userModel from "../../../../../models/User";
 
 type bodyPayloadType = {
@@ -24,12 +30,11 @@ export async function POST(req: NextRequest): Promise<Response> {
     const isUserExist = await userModel.findOne({
       $or: [{ username }, { email }],
     });
-
     if (isUserExist)
       return Response.json({ message: "user already exist" }, { status: 422 });
 
-    //check their validation
-    if (username.length < 3 || password.length < 8)
+    //check username and password length validation
+    if (username.length < 2 || password.length < 8)
       return Response.json(
         { message: "username or password length is incorrect" },
         { status: 400 }
@@ -41,6 +46,21 @@ export async function POST(req: NextRequest): Promise<Response> {
         { message: "invalid email format" },
         { status: 400 }
       );
+
+    //check username validation
+    if (!isValidUserName(username))
+      return Response.json(
+        { message: "invalid username format" },
+        { status: 400 }
+      );
+
+    //check password validation
+    if (!isValidPassword(password))
+      return Response.json(
+        { message: "invalid password format" },
+        { status: 400 }
+      );
+
 
     //hash password
     const hashedPassword: String = await hashPassword(password);

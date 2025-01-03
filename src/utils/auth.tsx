@@ -62,6 +62,18 @@ export function generateRefreshToken(data: string): string {
 
 // Helper function for email validation
 export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z][a-zA-Z0-9._%+-]*@(gmail|yahoo|outlook|hotmail|icloud|aol|protonmail|zoho|gmx|yandex)\.[a-zA-Z]{2,4}$/;
   return emailRegex.test(email);
+}
+
+// Helper function for email validation
+export function isValidUserName(username: string): boolean {
+  const usernameRegex = /^[a-zA-Z0-9_-]{3,15}$/;
+  return usernameRegex.test(username);
+}
+
+// Helper function for email validation
+export function isValidPassword(password: string): boolean {
+  const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+  return passwordRegex.test(password);
 }

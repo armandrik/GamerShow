@@ -1,10 +1,14 @@
 import AccountButton from "@/components/template/index/navbar/AccountButton";
 import MenuItem from "@/components/template/index/navbar/MenuItem";
 import RegisterButton from "@/components/template/index/navbar/RegisterButton";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
 function Navbar() {
+  const cookie = cookies();
+  const isUserLoggedIn = cookie.get("token")?.value;
+
   return (
     <nav className="px-12 mt-16 mb-11 tablet:mt-5 mobile:px-4">
       <main className="flex justify-between items-center">
@@ -61,13 +65,7 @@ function Navbar() {
               />
             </svg>
           </Link>
-          <div>
-            <RegisterButton />
-
-            {/* user account begin  */}
-            {/* <AccountButton /> */}
-            {/* user account end  */}
-          </div>
+          <div>{isUserLoggedIn ? <AccountButton /> : <RegisterButton />}</div>
         </div>
       </main>
     </nav>

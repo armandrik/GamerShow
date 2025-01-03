@@ -1,5 +1,6 @@
 import ScrollToTop from "@/utils/ScrollToTop";
 import "./globals.css";
+import { Slide, ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "صفحه‌اصلی گیمرشو | Gamer Show",
@@ -19,6 +20,20 @@ export default function RootLayout({
       <body className="bg-main">
         {children}
         <ScrollToTop />
+        <ToastContainer
+          position="top-right"
+          autoClose={1500}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="dark"
+          transition={Slide}
+          className="text-xs w-60 right-24"
+        />
       </body>
     </html>
   );
