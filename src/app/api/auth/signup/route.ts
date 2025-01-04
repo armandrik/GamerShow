@@ -81,10 +81,10 @@ export async function POST(req: NextRequest): Promise<Response> {
     });
 
     return Response.json(
-      { message: "success response" },
+      { message: "signed in successfully" },
       {
         status: 201,
-        headers: { "Set-Cookie": `token=${AccessToken};path=/;httpOnly=true` },
+        headers: { "Set-Cookie": `token=${AccessToken};path=/;httpOnly=true;Secure;SameSite=Strict` },
       }
     );
   } catch (error) {

@@ -1,3 +1,4 @@
+import { error } from "console";
 import { toast } from "react-toastify";
 
 //validate username in front
@@ -19,7 +20,7 @@ export const isValidPassword = (password: string): boolean => {
 };
 
 //validate register form
-export const validateForm = (formData: {
+export const validateRegisterForm = (formData: {
   username: string;
   email: string;
   password: string;
@@ -45,6 +46,26 @@ export const validateForm = (formData: {
 
   return { isValid, errors };
 };
+
+export const validateLogInForm = (formData: {
+  identifire: string,
+  password: string
+}) => {
+  let isValid = true
+  const errors = { identifire: "", password: "" }
+
+  if (!isValidEmail(formData.identifire) && !isValidUserName(formData.identifire)) {
+    errors.identifire = "مقادیر وارد شده نادرست است"
+    isValid = false
+  }
+
+  if (!isValidPassword(formData.password)) {
+    errors.password = "رمزعبور باید بین 8-16 کاراکتر, شامل یک حرف بزرگ, یک حرف کوچک و یک عدد باشد.";
+    isValid = false
+  }
+
+  return { isValid, errors }
+}
 
 //create toast custom function
 export const toasMessage = (msg: string, status: string) => {

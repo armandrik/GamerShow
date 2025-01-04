@@ -32,7 +32,7 @@ export default function RootLayout({
           pauseOnHover={false}
           theme="dark"
           transition={Slide}
-          className="text-xs w-60 right-24"
+          className="text-xs"
         />
       </body>
     </html>

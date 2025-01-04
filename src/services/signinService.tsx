@@ -1,10 +1,9 @@
-export const registerUser = async (formData: {
-  username: string;
-  email: string;
+export const loginUser = async (formData: {
+  identifire: string;
   password: string;
 }) => {
   try {
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch("/api/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,6 +12,6 @@ export const registerUser = async (formData: {
     });
     return response;
   } catch (error) {
-    console.log("register user fetch", error);
+    console.log("login user fetch", error);
   }
 };

@@ -1,12 +1,37 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DropDown from "./DropDown";
 
 function AccountButton() {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Handler to close dropdown if clicked outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setShowDropDown(false);
+      }
+    };
+
+    // Attach listener to document
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div onClick={() => setShowDropDown(!showDropDown)} className="relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-primary hover:bg-primary/80 transition-all">
+    <div
+      ref={buttonRef}
+      onClick={() => setShowDropDown(!showDropDown)}
+      className="relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-primary hover:bg-primary/80 transition-all"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

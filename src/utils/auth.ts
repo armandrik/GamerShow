@@ -29,6 +29,19 @@ export function generateAccessToken(data: string) {
   return token;
 }
 
+//generate a new token for user
+export function generateRefreshToken(data: string): string {
+  //check if private key is exist
+  const accessTokenSecretKey = process.env.REFRESH_TOKEN_SECRET_KEY;
+  if (!accessTokenSecretKey)
+    throw new Error(
+      "ACCESS_TOKEN_SECRET_KEY environment variable is not defined."
+    );
+
+  const token = sign({ data }, accessTokenSecretKey, { expiresIn: "15d" });
+  return token;
+}
+
 //check is user token is valid or not
 export function verifyAccessToken(token: string) {
   try {
@@ -47,18 +60,6 @@ export function verifyAccessToken(token: string) {
   }
 }
 
-//generate a new token for user
-export function generateRefreshToken(data: string): string {
-  //check if private key is exist
-  const accessTokenSecretKey = process.env.REFRESH_TOKEN_SECRET_KEY;
-  if (!accessTokenSecretKey)
-    throw new Error(
-      "ACCESS_TOKEN_SECRET_KEY environment variable is not defined."
-    );
-
-  const token = sign({ data }, accessTokenSecretKey, { expiresIn: "15d" });
-  return token;
-}
 
 // Helper function for email validation
 export function isValidEmail(email: string): boolean {
@@ -74,6 +75,6 @@ export function isValidUserName(username: string): boolean {
 
 // Helper function for email validation
 export function isValidPassword(password: string): boolean {
-  const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/;
   return passwordRegex.test(password);
 }

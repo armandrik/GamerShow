@@ -1,4 +1,6 @@
 "use client";
+import { loginUser } from "@/services/signinService";
+import { toasMessage, validateLogInForm } from "@/utils/helper";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -6,19 +8,86 @@ type loginPropType = {
   goToRegister: () => void;
 };
 
+type formDataType = {
+  identifire: string;
+  password: string;
+};
+
 function Login({ goToRegister }: loginPropType) {
+  const [formData, setFormData] = useState<formDataType>({
+    identifire: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState<formDataType>({
+    identifire: "",
+    password: "",
+  });
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleChangeInputsValues = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const logIn = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+
+    //validate from
+    const { isValid, errors } = validateLogInForm(formData);
+    if (!isValid) {
+      setErrorMessage(errors);
+      return;
+    }
+
+    try {
+      const response = await loginUser(formData);
+      if (response?.status === 201) {
+        console.log("logged in");
+        setFormData({
+          identifire: "",
+          password: "",
+        });
+        toasMessage("با موفقیت وارد شدید", "success")();
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 400);
+      } else if (response?.status === 400) {
+        toasMessage("مقادیر وارد شده نادرست است", "error")();
+      } else if (response?.status === 404) {
+        toasMessage("کاربر یافت نشد", "error");
+      } else if (response?.status === 401) {
+        toasMessage("نام‌کاربری یا رمزعبور اشتباه است", "error")();
+      } else {
+        toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
+        const data = await response?.json();
+        console.error(data.message || "Failed to sign up.");
+      }
+    } catch (error) {
+      toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
+      console.error("Failed to sign up. Try again.", error);
+    }
+  };
 
   return (
     <div className="w-[520px] mx-auto px-4 mobile:w-full">
       <h1 className="text-white/90 font-bold text-3xl text-center mb-10 mobile:text-2xl">
         ورود
       </h1>
-      <form className="flex flex-col justify-start items-start gap-8 text-white/80 [&>*]:w-full">
+      <form
+        onSubmit={logIn}
+        className="flex flex-col justify-start items-start gap-3 text-white/80 [&>*]:w-full"
+      >
         <div className="relative">
           <input
             type="text"
             required={true}
+            name="identifire"
+            value={formData.identifire}
+            onChange={handleChangeInputsValues}
             placeholder="آدرس ایمیل یا نام‌کاربری"
             className="w-full h-12 outline-none rounded-md px-5 bg-white/10 mobile:text-sm"
           />
@@ -54,10 +123,16 @@ function Login({ goToRegister }: loginPropType) {
             </svg>
           </div>
         </div>
+        <p className={`text-xs text-rose-500 pr-1 mobile:font-light`}>
+          {errorMessage.identifire}
+        </p>
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             required={true}
+            name="password"
+            value={formData.password}
+            onChange={handleChangeInputsValues}
             placeholder="رمز عبور"
             className="w-full h-12 outline-none rounded-md px-5 bg-white/10 mobile:text-sm"
           />
@@ -100,6 +175,9 @@ function Login({ goToRegister }: loginPropType) {
             </svg>
           )}
         </div>
+        <p className={`text-xs text-rose-500 pr-1 mobile:font-light`}>
+          {errorMessage.password}
+        </p>
         <button
           type="submit"
           className="flex items-center justify-center gap-1 bg-primary mb-8 h-12 rounded-md text-xl font-medium hover:bg-primary/80 transition-all mobile:text-lg"
@@ -124,7 +202,10 @@ function Login({ goToRegister }: loginPropType) {
       <div className="w-full flex items-center justify-between">
         <p className="text-white/90 text-sm">
           حساب کاربری ندارید؟{" "}
-          <span onClick={goToRegister} className="cursor-pointer text-font hover:text-font/80 transition-all">
+          <span
+            onClick={goToRegister}
+            className="cursor-pointer text-font hover:text-font/80 transition-all"
+          >
             ثبت‌نام کنید
           </span>
         </p>

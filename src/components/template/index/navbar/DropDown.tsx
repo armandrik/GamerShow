@@ -1,7 +1,21 @@
+import { signOutUser } from "@/services/singoutServices";
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-toastify";
 
 function DropDown() {
+  const signOut = async () => {
+    const response = await signOutUser();
+    if (response?.status === 200) {
+      toast.success("از اکانت خارج شدید");
+      setTimeout(() => {
+        window.location.reload();
+      }, 400);
+    } else {
+      toast.error("خطایی رخ داد, دوباره تلاش کنید");
+    }
+  };
+
   return (
     <div className="absolute z-20 left-0 top-14 mt-1 w-56 [&>p]:text-zinc-300 bg-secondary rounded-md shadow-md">
       <p className="px-4 py-2 text-base cursor-pointer">
@@ -120,11 +134,8 @@ function DropDown() {
         </Link>
       </p>
       <div className="w-48 h-[1px] mx-auto bg-zinc-600"></div>
-      <p className="px-4 py-2 text-base cursor-pointer">
-        <Link
-          href="/logout"
-          className="flex items-center justify-start gap-3 py-2 pr-2 rounded-md hover:bg-rose-500 transition-all"
-        >
+      <p onClick={signOut} className="px-4 py-2 text-base cursor-pointer">
+        <span className="flex items-center justify-start gap-3 py-2 pr-2 rounded-md hover:bg-rose-500 transition-all">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -140,7 +151,7 @@ function DropDown() {
             />
           </svg>
           خروج از حساب
-        </Link>
+        </span>
       </p>
     </div>
   );

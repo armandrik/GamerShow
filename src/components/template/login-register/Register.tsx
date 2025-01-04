@@ -1,6 +1,5 @@
 import { registerUser } from "@/services/signupService";
-import { toasMessage, validateForm } from "@/utils/helper";
-import { redirect } from "next/navigation";
+import { toasMessage, validateRegisterForm } from "@/utils/helper";
 import React, { useState } from "react";
 
 type registerPropType = {
@@ -39,7 +38,7 @@ function Register({ goToLogIn }: registerPropType) {
     e.preventDefault();
 
     // Validate form
-    const { isValid, errors } = validateForm(formData);
+    const { isValid, errors } = validateRegisterForm(formData);
     if (!isValid) {
       setErrorMesssage(errors);
       return;
@@ -48,7 +47,7 @@ function Register({ goToLogIn }: registerPropType) {
     try {
       const response = await registerUser(formData);
 
-      if (response.status === 201) {
+      if (response?.status === 201) {
         setFormData({
           username: "",
           email: "",
@@ -58,17 +57,17 @@ function Register({ goToLogIn }: registerPropType) {
         setTimeout(() => {
           window.location.href = "/";
         }, 400);
-      } else if (response.status === 422) {
+      } else if (response?.status === 422) {
         toasMessage("قبلا ثبت‌نام کرده‌اید", "error")();
-      } else if (response.status === 400) {
+      } else if (response?.status === 400) {
         toasMessage("مقادیر وارد شده نادرست است", "error")();
       } else {
         toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error")();
-        const data = await response.json();
+        const data = await response?.json();
         console.error(data.message || "Failed to sign up.");
       }
     } catch (error) {
-      toasMessage("خطایی رخ داد, دوباره تلاش کنید", "warn");
+      toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
       console.error("Failed to sign up. Try again.", error);
     }
   };
