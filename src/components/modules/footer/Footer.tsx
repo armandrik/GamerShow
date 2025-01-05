@@ -68,7 +68,7 @@ function Footer() {
           </button>
         </div>
         <div className="bg-white rounded-xl p-4 flex items-center justify-center">
-          <img src="./images/Frame 45.svg" alt="truested icons" />
+          <img src="/images/Frame 45.svg" alt="truested icons" />
         </div>
       </div>
     </div>

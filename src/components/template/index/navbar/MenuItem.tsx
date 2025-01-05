@@ -8,7 +8,7 @@ function MenuItem() {
         <Link href="/">خانه</Link>
       </li>
       <li>
-        <Link href="/category">فروشگاه</Link>
+        <Link href="/product">فروشگاه</Link>
       </li>
       <li>
         <Link href="/about-us">درباره‌ما</Link>

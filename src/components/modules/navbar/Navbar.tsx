@@ -28,7 +28,7 @@ function Navbar() {
             />
           </svg>
           <Link href="/">
-            <img src="./images/logo.svg" alt="logo" className="mobile:w-11" />
+            <img src="/images/logo.svg" alt="logo" className="mobile:w-11" />
           </Link>
           <MenuItem />
         </div>

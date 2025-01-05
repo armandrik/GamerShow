@@ -8,8 +8,8 @@ function Product() {
         src="https://media.rawg.io/media/games/734/7342a1cd82c8997ec620084ae4c2e7e4.jpg"
         alt="game card"
       />
-      <p className="text-white text-lg px-7 pt-7 mb-4 cursor-pointer pointer-events-auto transition-all mobile:text-base mobile:px-3 mobile:pt-3 mobile:leading-7">
-        <Link href="/category/id">
+      <p className="text-white text-lg px-7 pt-7 mb-4 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:px-3 mobile:pt-3 mobile:leading-7">
+        <Link href="/product/id">
           بازی Grand Theft Auto VI برای کنسول پلی استیشن ۵
         </Link>
       </p>
