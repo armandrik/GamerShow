@@ -5,7 +5,7 @@ import ScrollArrows from "./ScrollArrows";
 
 function LatestGames() {
   return (
-    <div className="px-12 mt-28 mb-20 tablet:mt-48 mobile:px-4 mobile:mt-72">
+    <div className="px-12 mt-28 mb-20 tablet:mt-48 mobile:px-4 mobile:mt-60">
       <div className="flex items-center justify-between gap-4 mb-14 mobile:mb-4">
         <h2 className="text-white text-2xl font-bold mobile:text-xl">
           جدیدترین بازی های فروشگاه

@@ -11,9 +11,6 @@ function MenuItem() {
         <Link href="/product">فروشگاه</Link>
       </li>
       <li>
-        <Link href="/about-us">درباره‌ما</Link>
-      </li>
-      <li>
         <Link href="/contact-us">تماس با‌ما</Link>
       </li>
       <li>
