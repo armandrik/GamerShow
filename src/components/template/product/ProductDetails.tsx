@@ -11,7 +11,9 @@ function ProductDetails() {
           میانگین زمان بازی : 14 ساعت
         </p>
       </div>
-      <h1 className="text-[50px] font-bold desktop:text-[44px] mobile:text-4xl">God of war (2018)</h1>
+      <h1 className="text-[50px] font-bold desktop:text-[44px] mobile:text-4xl">
+        God of war (2018)
+      </h1>
       <div className="flex items-center justify-start gap-1 mt-5">
         <p>(دیدگاه کاربر 4979)</p>
         {Array.apply(null, Array(5)).map((item, index) => (
@@ -33,9 +35,7 @@ function ProductDetails() {
         ))}
       </div>
       <p className="text-sm text-white/60 my-6">ژانر : اکشن</p>
-      <p className="text-sm text-white/60 ">
-        مناسب برای : playstation 5 / pc
-      </p>
+      <p className="text-sm text-white/60 ">مناسب برای : playstation 5 / pc</p>
       <div className="flex items-center justify-start gap-2 my-7">
         <p className="text-sm text-white/60">پلتفرم : </p>
         <p className="text-xs text-zinc-200 py-1 px-2 rounded-sm bg-gray-500/50">
@@ -45,10 +45,16 @@ function ProductDetails() {
           اپیک گیمز
         </p>
       </div>
-      <p className="text-sm text-white/60">
-        امتیاز متا : <span className="border border-emerald-600 p-1 rounded-md font-medium text-emerald-600">94</span>
-      </p>
-      <div className="flex-col items-start justify-between mt-14 [&>*]:w-full [&>*]:font-medium [&>*]:text-lg [&>*]:py-3 [&>*]:rounded [&>*]:transition-all desktop:mt-12 mobile:[&>*]:text-base">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-white/60">
+          امتیاز متا :{" "}
+          <span className="border border-emerald-600 p-1 rounded-md font-medium text-emerald-600">
+            94
+          </span>
+        </p>
+        <p className="font-semibold text-2xl text-white/80">۴/۵۰۰/۰۰۰ هزار تومان</p>
+      </div>
+      <div className="flex-col items-start justify-between mt-10 [&>*]:w-full [&>*]:font-medium [&>*]:text-lg [&>*]:py-3 [&>*]:rounded [&>*]:transition-all desktop:mt-9 mobile:[&>*]:text-base">
         <button className="bg-primary mb-5 hover:bg-primary/80 flex items-center justify-center gap-1">
           افزودن به سبد خرید
           <svg

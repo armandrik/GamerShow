@@ -3,9 +3,10 @@ import React from "react";
 
 type scrollArrowPropType = {
   elementId: string;
+  display : string
 };
 
-function ScrollArrows({ elementId }: scrollArrowPropType) {
+function ScrollArrows({ elementId ,display }: scrollArrowPropType) {
   const scrollLeft = () => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -25,7 +26,7 @@ function ScrollArrows({ elementId }: scrollArrowPropType) {
   };
 
   return (
-    <div className="hidden items-center justify-start gap-4 mb-4 text-rose-400/90 mobile:flex">
+    <div className={`${display} items-center justify-start gap-4 mb-4 text-rose-400/90 mobile:flex`}>
       <svg
         onClick={scrollLeft}
         xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +34,7 @@ function ScrollArrows({ elementId }: scrollArrowPropType) {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="size-6 cursor-pointer"
+        className="size-9 cursor-pointer mobile:size-6"
       >
         <path
           strokeLinecap="round"
@@ -48,7 +49,7 @@ function ScrollArrows({ elementId }: scrollArrowPropType) {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="size-6 cursor-pointer"
+        className="size-9 cursor-pointer mobile:size-6"
       >
         <path
           strokeLinecap="round"

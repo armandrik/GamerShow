@@ -76,7 +76,7 @@ function Gallery() {
           />
         </svg>
       </div>
-      <ScrollArrows elementId="galleyImages" />
+      <ScrollArrows display="hidden" elementId="galleyImages" />
       <div id="galleyImages" className="w-[600px] flex items-center justify-start flex-wrap gap-3 desktop:w-[500px] desktop:gap-1 tablet-lg:flex-col tablet-lg:w-40 mobile:w-full mobile:flex-nowrap mobile:flex-row mobile:justify-start mobile:overflow-x-auto mobile:snap-x mobile:snap-mandatory mobile:no-scrollbar mobile:scroll-smooth">
         {galleryList.map((item, index) => (
           <img

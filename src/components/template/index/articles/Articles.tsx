@@ -26,7 +26,7 @@ function Articles() {
             مشاهده مقاله
           </button>
         </div>
-        <ScrollArrows elementId="scrollarticles" />
+        <ScrollArrows display="hidden" elementId="scrollarticles" />
         <Article />
       </div>
     </>

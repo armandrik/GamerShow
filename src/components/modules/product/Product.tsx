@@ -3,18 +3,19 @@ import React from "react";
 
 function Product() {
   return (
-    <div className="rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all mobile:hover:scale-100 mobile:snap-start mobile:w-52 mobile:flex-shrink-0 pointer-events-none">
+    <div className="w-80 rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all mobile:hover:scale-100 snap-start mobile:w-52 flex-shrink-0 pointer-events-none">
       <img
         src="https://media.rawg.io/media/games/734/7342a1cd82c8997ec620084ae4c2e7e4.jpg"
         alt="game card"
+        className="selection:bg-transparent"
       />
       <p className="text-white text-lg px-7 pt-7 mb-4 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:px-3 mobile:pt-3 mobile:leading-7">
         <Link href="/product/id">
           بازی Grand Theft Auto VI برای کنسول پلی استیشن ۵
         </Link>
       </p>
-      <p className="text-font text-lg px-7 pb-7 text-center mobile:text-base mobile:px-3 mobile:pb-3">
-        قیمت ۴/۵۰۰ هزار تومان
+      <p className="flex items-center justify-between text-white/80 text-lg px-7 pb-7 mobile:text-base mobile:px-3 mobile:pb-3">
+        قیمت : <span>تومان ۴/۵۰۰/۰۰۰</span>
       </p>
       <div className="border-t border-zinc-700/50 flex items-center pt-3 justify-between shadow-card">
         <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-rose-400/90 p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-white hover:text-orange-500 transition-all mobile:p-3 mobile:w-28 mobile:text-sm">

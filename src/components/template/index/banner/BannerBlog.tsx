@@ -2,7 +2,7 @@ import React from "react";
 
 function BannerBlog() {
   return (
-    <div className="absolute flex flex-col justify-between item-start top-[440px] left-32 w-[550px] h-[320px] rounded-3xl bg-primary/10 backdrop-blur-lg border-[2px] pt-5 border-zinc-400/30 desktop:w-[500px] desktop:h-72 tablet:left-16 tablet:top-[490px] tablet:w-[400px] mobile:w-[85%] mobile:mx-auto mobile:left-0 mobile:right-0 mobile:top-[600px] mobile:pt-3 mobile:gap-5 mobile:h-auto">
+    <div className="absolute flex flex-col justify-between item-start top-[440px] left-32 w-[550px] h-[320px] rounded-3xl bg-primary/10 backdrop-blur-lg border-[2px] pt-5 border-zinc-400/30 desktop:w-[500px] desktop:h-72 tablet:left-16 tablet:top-[490px] tablet:w-[400px] mobile:w-[85%] mobile:mx-auto mobile:left-0 mobile:right-0 mobile:top-[450px] mobile:pt-3 mobile:gap-5 mobile:h-auto">
       <div className="flex flex-col items-start justify-center gap-4 text-white px-9 mobile:px-4">
         <p className="text-font font-medium text-sm bg-font/15 px-3 py-1 rounded-full">
           مقاله جدید

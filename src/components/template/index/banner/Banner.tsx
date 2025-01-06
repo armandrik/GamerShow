@@ -81,7 +81,7 @@ const Banner: React.FC = () => {
         <div
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="relative w-full h-[550px] overflow-hidden rounded-3xl"
+          className="relative w-full h-[550px] overflow-hidden rounded-3xl mobile:h-[400px]"
         >
           {/* Slides */}
           {slides.map((slide, index) => (
@@ -99,7 +99,7 @@ const Banner: React.FC = () => {
             />
           ))}
         </div>
-        <div className="flex flex-col justify-start items-center gap-4 mobile:flex-row mobile:gap-2 mobile:w-[99%] mobile:pl-5">
+        <div className="flex flex-col justify-start items-center gap-4 mobile:hidden">
           <button
             onClick={prevSlide}
             className="p-2 z-10 bg-primary text-white rounded-full shadow hover:bg-primary/80 transition-colors mobile:hidden"

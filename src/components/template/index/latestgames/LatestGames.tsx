@@ -5,7 +5,7 @@ import ScrollArrows from "./ScrollArrows";
 
 function LatestGames() {
   return (
-    <div className="px-12 mt-28 mb-20 tablet:mt-48 mobile:px-4">
+    <div className="px-12 mt-28 mb-20 tablet:mt-48 mobile:px-4 mobile:mt-72">
       <div className="flex items-center justify-between gap-4 mb-14 mobile:mb-4">
         <h2 className="text-white text-2xl font-bold mobile:text-xl">
           جدیدترین بازی های فروشگاه
@@ -14,11 +14,12 @@ function LatestGames() {
           <Link href="/category">مشاهده همه</Link>
         </button>
       </div>
-      <ScrollArrows elementId="scrollContainer"/>
+      <ScrollArrows display="flex" elementId="scrollContainer"/>
       <div
         id="scrollContainer"
-        className="grid grid-cols-5 gap-6 tv:grid-cols-4 desktop:grid-cols-3 tablet-lg:grid-cols-2 mobile:flex mobile:snap-x mobile:snap-mandatory mobile:gap-x-[14px] mobile:no-scrollbar mobile:overflow-x-auto mobile:no-scrollbar mobile:scroll-smooth"
+        className="flex snap-x snap-mandatory gap-x-[14px] no-scrollbar overflow-x-auto no-scrollbar scroll-smooth"
       >
+        <Product />
         <Product />
         <Product />
         <Product />
