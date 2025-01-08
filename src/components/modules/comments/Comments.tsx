@@ -1,7 +1,23 @@
 import React from "react";
 import CardComments from "./CardComments";
+import { ObjectId } from "mongoose";
 
-function Comments() {
+export type CommentType = {
+  _id: ObjectId; // ID of the comment
+  name: string; // Name of the commenter
+  body: string; // Comment content
+  productID: ObjectId; // ID of the associated product
+  createdAt: Date; // Timestamp of creation
+  updatedAt: Date; // Timestamp of last update
+  __v: number; // Version key
+};
+
+type commentsPropType = {
+  comments: CommentType[];
+};
+
+function Comments({ comments }: commentsPropType) {
+
   return (
     <div className="w-[1150px] mx-auto text-white px-12 desktop:w-[1000px] tablet-lg:w-full mobile:px-4">
       <h2 className="text-2xl font-medium mb-5">نظرات(2)</h2>
@@ -29,7 +45,9 @@ function Comments() {
           </button>
         </div>
       </form>
-      <CardComments />
+      {comments.map((item) => (
+        <CardComments key={item._id.toString()} data={item}/>
+      ))}
     </div>
   );
 }

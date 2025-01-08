@@ -1,11 +1,5 @@
 import mongoose, { Model, Schema } from "mongoose";
-
-type userSchemaType = {
-  username: string;
-  email: string;
-  password: string;
-  role: "ADMIN" | "USER";
-};
+import { userSchemaType } from "../types/userSchemaType";
 
 const schema: Schema<userSchemaType> = new mongoose.Schema<userSchemaType>({
   username: {

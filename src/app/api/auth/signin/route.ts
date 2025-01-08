@@ -10,7 +10,7 @@ type bodyPayloadType = {
 
 export async function POST(req: NextRequest): Promise<Response> {
 
-    connectedToDB()
+    await connectedToDB()
 
     const body: bodyPayloadType = await req.json()
     const { identifire, password } = body

@@ -2,23 +2,20 @@
 import React, { useState } from "react";
 import ScrollArrows from "../index/latestgames/ScrollArrows";
 
-function Gallery() {
-  const galleryList = [
-    "https://media.rawg.io/media/screenshots/d68/d6868e5f7bce66e326bd48b11ba24b13.jpeg",
-    "https://media.rawg.io/media/screenshots/928/928cdaf4ae204f202d177bbd65e911b3.jpeg",
-    "https://media.rawg.io/media/screenshots/a54/a549a06ebe89c570cabb57308c4c42a5.jpeg",
-    "https://media.rawg.io/media/screenshots/d23/d2380cc90e167f82bb773ce20b0bc550.jpeg",
-  ];
+type galleryPropType = {
+  screenshots : string[]
+}
+
+function Gallery({screenshots} : galleryPropType) {
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const showCurrentImage = (index: number) => {
-    console.log(index);
     setCurrentSlide(index);
   };
 
   const nextImage = () => {
-    if (currentSlide === 3) {
+    if (currentSlide === screenshots.length - 1) {
       setCurrentSlide(0);
       return;
     }
@@ -26,7 +23,7 @@ function Gallery() {
   };
   const prevImage = () => {
     if (currentSlide === 0) {
-      setCurrentSlide(3);
+      setCurrentSlide(screenshots.length - 1);
       return;
     }
     setCurrentSlide((prev) => prev - 1);
@@ -50,7 +47,7 @@ function Gallery() {
             d="m8.25 4.5 7.5 7.5-7.5 7.5"
           />
         </svg>
-        {galleryList.map((item, index) => (
+        {screenshots.map((item, index) => (
           <img
             key={index}
             src={item}
@@ -78,7 +75,7 @@ function Gallery() {
       </div>
       <ScrollArrows display="hidden" elementId="galleyImages" />
       <div id="galleyImages" className="w-[600px] flex items-center justify-start flex-wrap gap-3 desktop:w-[500px] desktop:gap-1 tablet-lg:flex-col tablet-lg:w-40 mobile:w-full mobile:flex-nowrap mobile:flex-row mobile:justify-start mobile:overflow-x-auto mobile:snap-x mobile:snap-mandatory mobile:no-scrollbar mobile:scroll-smooth">
-        {galleryList.map((item, index) => (
+        {screenshots.map((item, index) => (
           <img
             onClick={() => showCurrentImage(index)}
             key={index}

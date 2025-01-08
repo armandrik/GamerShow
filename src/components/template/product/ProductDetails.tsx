@@ -1,21 +1,34 @@
 import React from "react";
+import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 
-function ProductDetails() {
+type productDetailsPropType = {
+  data: ProductSchemaType;
+};
+
+function ProductDetails({ data }: productDetailsPropType) {
+  const date = new Date(data.released);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <div className="mobile:w-full mobile:flex-col mobile:items-center mobile:justify-start">
       <div className="flex items-center justify-start gap-4 mb-5 mobile:justify-between mobile:mt-5">
         <p className="bg-white text-black text-xs font-light px-1 rounded-sm">
-          APR 20, 2018
+          {formattedDate}
         </p>
         <p className="font-medium text-sm text-zinc-100">
-          میانگین زمان بازی : 14 ساعت
+          میانگین زمان بازی : {data.averagePlayTime} ساعت
         </p>
       </div>
       <h1 className="text-[50px] font-bold desktop:text-[44px] mobile:text-4xl">
-        God of war (2018)
+        {data.name}
       </h1>
       <div className="flex items-center justify-start gap-1 mt-5">
-        <p>(دیدگاه کاربر 4979)</p>
+        <p>(دیدگاه کاربر {data.comments.length})</p>
         {Array.apply(null, Array(5)).map((item, index) => (
           <svg
             key={index}
@@ -34,25 +47,36 @@ function ProductDetails() {
           </svg>
         ))}
       </div>
-      <p className="text-sm text-white/60 my-6">ژانر : اکشن</p>
-      <p className="text-sm text-white/60 ">مناسب برای : playstation 5 / pc</p>
+      <p className="text-sm text-white/60 my-6">ژانر : {data.genre}</p>
+      <div className="flex items-center justify-start gap-2">
+        <p className="text-sm text-white/60 "> پلتفرم : </p>
+        {data.platform.map((item, index) => (
+          <p key={index} className="text-sm text-zinc-200">
+            {item},
+          </p>
+        ))}
+      </div>
       <div className="flex items-center justify-start gap-2 my-7">
-        <p className="text-sm text-white/60">پلتفرم : </p>
-        <p className="text-xs text-zinc-200 py-1 px-2 rounded-sm bg-gray-500/50">
-          استیم
-        </p>
-        <p className="text-xs text-zinc-200 py-1 px-2 rounded-sm bg-gray-500/50">
-          اپیک گیمز
-        </p>
+        <p className="text-sm text-white/60">موجود در : </p>
+        {data.store.map((item, index) => (
+          <p
+            key={index}
+            className="text-xs text-zinc-200 py-1 px-2 rounded-sm bg-gray-500/50"
+          >
+            {item}
+          </p>
+        ))}
       </div>
       <div className="flex items-center justify-between">
         <p className="text-sm text-white/60">
           امتیاز متا :{" "}
           <span className="border border-emerald-600 p-1 rounded-md font-medium text-emerald-600">
-            94
+            {data.metaScore}
           </span>
         </p>
-        <p className="font-semibold text-2xl text-white/80">۴/۵۰۰/۰۰۰ هزار تومان</p>
+        <p className="font-semibold text-2xl text-white/80">
+          {data.price.toLocaleString()} هزار تومان
+        </p>
       </div>
       <div className="flex-col items-start justify-between mt-10 [&>*]:w-full [&>*]:font-medium [&>*]:text-lg [&>*]:py-3 [&>*]:rounded [&>*]:transition-all desktop:mt-9 mobile:[&>*]:text-base">
         <button className="bg-primary mb-5 hover:bg-primary/80 flex items-center justify-center gap-1">

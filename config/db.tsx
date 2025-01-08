@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import ProductModel from "../models/Product";
+import commentModel from "../models/Comments";
 
 /**
  * Connects to the MongoDB database using Mongoose.
@@ -21,6 +23,8 @@ const connectedToDB = async (): Promise<boolean> => {
 
     await mongoose.connect(mongoUrl);
     console.log("successfully connected to DB");
+    ProductModel;
+    commentModel;
     return true;
   } catch (error) {
     console.log("faild to connection", error);

@@ -9,6 +9,9 @@ import SystemRequierment from "@/components/template/product/SystemRequierment";
 import TagGame from "@/components/template/product/TagGame";
 import React from "react";
 import Comments from "@/components/modules/comments/Comments";
+import commentModel from "../../../../models/Comments";
+import ProductModel from "../../../../models/Product";
+import connectedToDB from "../../../../config/db";
 
 type productPropType = {
   params: {
@@ -16,25 +19,45 @@ type productPropType = {
   };
 };
 
-function Product({ params }: productPropType) {
+async function Product({ params }: productPropType) {
+  await connectedToDB();
+
+  const productID = params.id;
+
+  const product = await ProductModel.findOne(
+    { _id: productID },
+    "-__v"
+  ).populate("comments");
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  const dynamicBg = `linear-gradient(to top, rgba(31,33,40,1), rgba(33,31,40,0.9)), url(${product?.image})`;
+
   return (
     <div>
-      <div className="bg-cover border border-main bg-no-repeat bg-top bg-[linear-gradient(to_top,rgba(31,33,40,1),rgba(33,31,40,0.9)),url('https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be59.jpg')]">
+      <div
+        className={`bg-cover border border-main bg-no-repeat bg-top`}
+        style={{
+          backgroundImage: dynamicBg,
+        }}
+      >
         <Navbar />
-        <BreadCrump route={`/product/${params.id}`} />
+        <BreadCrump route={`/product/${product?.name}`} />
         <main className="flex items-start justify-center gap-10 text-white px-12 mt-16 mb-11 tablet:mt-5 mobile:px-4 desktop:gap-6 desktop:mt-10 tablet-lg:flex-col tablet-lg:justify-start">
-          <Gallery />
-          <ProductDetails />
+          <Gallery screenshots={product?.screenshots ?? []} />
+          <ProductDetails data={JSON.parse(JSON.stringify(product))} />
         </main>
       </div>
       <div className="w-[1150px] mx-auto text-white px-12 mt-16 mb-11 desktop:w-[1000px] tablet-lg:w-full tablet:mt-5 mobile:px-4">
-        <AboutGame />
-        <TagGame />
-        <SystemRequierment />
+        <AboutGame about={product?.about ?? ""} />
+        <TagGame tag={product?.tags ?? []} />
+        <SystemRequierment requirements={product.requirements ?? ""}/>
       </div>
       <SimilarGames />
       <div className="my-20 pt-10 bg-no-repeat bg-top bg-[linear-gradient(to_top,rgba(31,33,40,1),rgba(33,31,40,0.9)),url('https://media.rawg.io/media/games/a79/a79d2fc90c4dbf07a8580b19600fd61d.jpg')]">
-        <Comments />
+        <Comments comments={JSON.parse(JSON.stringify(product?.comments))} />
       </div>
       <Footer />
     </div>

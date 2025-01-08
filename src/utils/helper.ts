@@ -1,4 +1,3 @@
-import { error } from "console";
 import { toast } from "react-toastify";
 
 //validate username in front
@@ -78,3 +77,74 @@ export const toasMessage = (msg: string, status: string) => {
   };
   return customToast;
 };
+
+type ValidationResult = { valid: boolean; errors?: string[] };
+
+export function validateProductInput(data: any): ValidationResult {
+  const errors: string[] = [];
+
+  // Validate required string fields
+  const stringFields = ["image", "name", "genre", "about"];
+  stringFields.forEach((field) => {
+    if (!data[field] || typeof data[field] !== "string") {
+      errors.push(`Invalid or missing '${field}'.`);
+    }
+  });
+
+  // Validate required numeric fields
+  const numberFields = ["price", "averagePlayTime", "score", "metaScore"];
+  numberFields.forEach((field) => {
+    if (typeof data[field] !== "number" || data[field] < 0) {
+      errors.push(`Invalid or missing '${field}'. Must be a non-negative number.`);
+    }
+  });
+
+  // Additional validation for numeric ranges
+  if (data.score < 0 || data.score > 10) errors.push("Score must be between 0 and 10.");
+  if (data.metaScore < 0 || data.metaScore > 100) errors.push("MetaScore must be between 0 and 100.");
+
+  // Validate array fields
+  const arrayFields = ["store", "platform", "screenshots", "tags"];
+  arrayFields.forEach((field) => {
+    if (!Array.isArray(data[field]) || data[field].some((item) => typeof item !== "string")) {
+      errors.push(`Invalid or missing '${field}'. Must be an array of strings.`);
+    }
+  });
+
+  // Validate requirements object
+  if (
+    !data.requirements ||
+    typeof data.requirements !== "object" ||
+    !data.requirements.minimum ||
+    !data.requirements.recommended
+  ) {
+    errors.push("Invalid or missing 'requirements'. Must contain 'minimum' and 'recommended' fields.");
+  }
+
+  // Check for errors
+  return errors.length > 0 ? { valid: false, errors } : { valid: true };
+}
+
+type CommentValidationResult = { valid: boolean; errors?: string[] };
+
+export function validateCommentInput(data: any): CommentValidationResult {
+  const errors: string[] = [];
+
+  // Validate required string fields
+  if (!data.name || typeof data.name !== "string" || data.name.trim() === "") {
+    errors.push("Invalid or missing 'name'. Must be a non-empty string.");
+  }
+
+  if (!data.body || typeof data.body !== "string" || data.body.trim() === "") {
+    errors.push("Invalid or missing 'body'. Must be a non-empty string.");
+  }
+
+  // Validate productID (should be a valid MongoDB ObjectId)
+  if (!data.productID || typeof data.productID !== "string" || !/^[0-9a-fA-F]{24}$/.test(data.productID)) {
+    errors.push("Invalid or missing 'productID'. Must be a valid MongoDB ObjectId.");
+  }
+
+  // Return validation result
+  return errors.length > 0 ? { valid: false, errors } : { valid: true };
+}
+
