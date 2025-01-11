@@ -25,7 +25,7 @@ export function generateAccessToken(data: string) {
       "ACCESS_TOKEN_SECRET_KEY environment variable is not defined."
     );
 
-  const token = sign({ data }, accessTokenSecretKey, { expiresIn: "60s" });
+  const token = sign({ data }, accessTokenSecretKey, { expiresIn: "60D" });
   return token;
 }
 

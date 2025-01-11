@@ -43,6 +43,7 @@ function CardComments({ data }: cardCommentPropType) {
             type="text"
             className="w-full outline-none p-2.5 text-sm text-white bg-transparent rounded-lg border-2 border-zinc-700/40 focus:border-primary"
             placeholder="جواب بدید..."
+            required={true}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

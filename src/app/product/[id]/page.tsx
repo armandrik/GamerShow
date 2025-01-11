@@ -12,6 +12,9 @@ import Comments from "@/components/modules/comments/Comments";
 import commentModel from "../../../../models/Comments";
 import ProductModel from "../../../../models/Product";
 import connectedToDB from "../../../../config/db";
+import { cookies } from "next/headers";
+import { verifyAccessToken } from "@/utils/auth";
+import userModel from "../../../../models/User";
 
 type productPropType = {
   params: {
@@ -23,6 +26,20 @@ async function Product({ params }: productPropType) {
   await connectedToDB();
 
   const productID = params.id;
+  let name : string | undefined = undefined
+
+  const token = cookies().get("token")?.value;
+  if (typeof token === "string") {
+    const tokenPayload = verifyAccessToken(token);
+    if (
+      tokenPayload &&
+      typeof tokenPayload !== "string" &&
+      "data" in tokenPayload
+    ) {
+      const userName = await userModel.findOne({ email: tokenPayload.data });
+      name = userName?.username
+    }
+  }
 
   const product = await ProductModel.findOne(
     { _id: productID },
@@ -53,11 +70,15 @@ async function Product({ params }: productPropType) {
       <div className="w-[1150px] mx-auto text-white px-12 mt-16 mb-11 desktop:w-[1000px] tablet-lg:w-full tablet:mt-5 mobile:px-4">
         <AboutGame about={product?.about ?? ""} />
         <TagGame tag={product?.tags ?? []} />
-        <SystemRequierment requirements={product.requirements ?? ""}/>
+        <SystemRequierment requirements={product.requirements ?? ""} />
       </div>
-      <SimilarGames />
+      <SimilarGames searchParams={product?._id.toString()} genre={product?.genre}/>
       <div className="my-20 pt-10 bg-no-repeat bg-top bg-[linear-gradient(to_top,rgba(31,33,40,1),rgba(33,31,40,0.9)),url('https://media.rawg.io/media/games/a79/a79d2fc90c4dbf07a8580b19600fd61d.jpg')]">
-        <Comments comments={JSON.parse(JSON.stringify(product?.comments))} />
+        <Comments
+          comments={JSON.parse(JSON.stringify(product?.comments))}
+          productID={productID}
+          name={name}
+        />
       </div>
       <Footer />
     </div>

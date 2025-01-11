@@ -19,6 +19,7 @@ module.exports = {
         'tablet-lg': { 'max': '1000px' }, // Applies styles below 1000px
         'tablet': { 'max': '860px' }, // Applies styles below 860px
         'mobile': { 'max': '640px' }, // Applies styles below 640px
+        'small': { 'max': '480px' }, // Applies styles below 480px
       },
       boxShadow: {
         'card': '0px 35px 55px 0px #FF754C',

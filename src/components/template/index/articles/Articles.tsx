@@ -1,6 +1,7 @@
 import Article from "@/components/modules/article/Article";
 import React from "react";
 import ScrollArrows from "../latestgames/ScrollArrows";
+import Link from "next/link";
 
 function Articles() {
   return (
@@ -28,6 +29,25 @@ function Articles() {
         </div>
         <ScrollArrows display="hidden" elementId="scrollarticles" />
         <Article />
+      </div>
+      <div className="w-full flex items-center justify-center my-20 mobile:my-10 mobile:px-4">
+        <button className="flex items-center justify-center gap-1 w-40 h-12 bg-zinc-700/70 text-white rounded-2xl font-bold text-lg hover:bg-zinc-700 transition-all mobile:text-base mobile:w-full">
+          <Link href="/category">همه مقالات</Link>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
+            />
+          </svg>
+        </button>
       </div>
     </>
   );

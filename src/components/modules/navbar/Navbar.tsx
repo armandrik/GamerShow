@@ -8,8 +8,8 @@ import Badge from "../badge/Badge";
 import Drawer from "@/components/template/index/navbar/Drawer";
 
 function Navbar() {
-  const cookie = cookies();
-  const isUserLoggedIn = cookie.get("token")?.value;
+  const token = cookies();
+  const isUserLoggedIn = token.get("token")?.value;
 
   return (
     <nav className="px-12 mt-16 mb-11 tablet:mt-5 mobile:px-4 mobile:mb-5">
