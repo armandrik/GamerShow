@@ -4,7 +4,8 @@ import Articles from "@/components/template/index/articles/Articles";
 import Banner from "@/components/template/index/banner/Banner";
 import LatestGames from "@/components/template/index/latestgames/LatestGames";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <>
       <Navbar />

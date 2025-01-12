@@ -1,7 +1,6 @@
 import AccountButton from "@/components/template/index/navbar/AccountButton";
 import MenuItem from "@/components/template/index/navbar/MenuItem";
 import RegisterButton from "@/components/template/index/navbar/RegisterButton";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 import Badge from "../badge/Badge";
