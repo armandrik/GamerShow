@@ -12,9 +12,10 @@ import Comments from "@/components/modules/comments/Comments";
 import commentModel from "../../../../models/Comments";
 import ProductModel from "../../../../models/Product";
 import connectedToDB from "../../../../config/db";
-import { cookies } from "next/headers";
-import { useAuth, verifyAccessToken } from "@/utils/auth";
+import { useAuth } from "@/utils/auth";
 import userModel from "../../../../models/User";
+import { redirect } from "next/navigation";
+import mongoose from "mongoose";
 
 type productPropType = {
   params: {
@@ -26,15 +27,21 @@ async function Product({ params }: productPropType) {
   await connectedToDB();
 
   const productID = params.id;
-  const user = await useAuth()
-  
+
+  // Validate if the productID is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(productID)) {
+    redirect("/not-found"); // Redirect to the homepage
+  }
+
+  const user = await useAuth();
+
   const product = await ProductModel.findOne(
     { _id: productID },
     "-__v"
   ).populate("comments");
 
   if (!product) {
-    return <div>Product not found</div>;
+    redirect("/not-found"); // Redirect if product doesn't exist
   }
 
   const dynamicBg = `linear-gradient(to top, rgba(31,33,40,1), rgba(33,31,40,0.9)), url(${product?.image})`;
@@ -59,7 +66,10 @@ async function Product({ params }: productPropType) {
         <TagGame tag={product?.tags ?? []} />
         <SystemRequierment requirements={product.requirements ?? ""} />
       </div>
-      <SimilarGames searchParams={product?._id.toString()} genre={product?.genre}/>
+      <SimilarGames
+        searchParams={product?._id.toString()}
+        genre={product?.genre}
+      />
       <div className="my-20 pt-10 bg-no-repeat bg-top bg-[linear-gradient(to_top,rgba(31,33,40,1),rgba(33,31,40,0.9)),url('https://media.rawg.io/media/games/a79/a79d2fc90c4dbf07a8580b19600fd61d.jpg')]">
         <Comments
           comments={JSON.parse(JSON.stringify(product?.comments))}
