@@ -1,5 +1,8 @@
 import { compare, hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
+import connectedToDB from "../../config/db";
+import { cookies } from "next/headers";
+import userModel from "../../models/User";
 
 //hash user password => signup
 export async function hashPassword(password: string): Promise<string> {
@@ -77,4 +80,21 @@ export function isValidUserName(username: string): boolean {
 export function isValidPassword(password: string): boolean {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/;
   return passwordRegex.test(password);
+}
+
+export async function useAuth() {
+  await connectedToDB()
+  const token = cookies().get('token')?.value
+  let user = null;
+
+  if (token) {
+    if (typeof token === "string") {
+      const tokenPayload = verifyAccessToken(token);
+      if (tokenPayload && typeof tokenPayload !== "string" && "data" in tokenPayload) {
+        user = await userModel.findOne({ email: tokenPayload.data });
+        return user
+      }
+    }
+  }
+  return user;
 }

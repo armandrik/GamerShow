@@ -6,10 +6,10 @@ import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 type productPropType = {
   data: ProductSchemaType;
   mobileWidth: string;
-  width : string
+  width: string;
 };
 
-function Product({ data, mobileWidth , width }: productPropType) {
+function Product({ data, mobileWidth, width }: productPropType) {
   const [isLoading, setIsLoading] = useState(!data); // Initially true if no data
 
   useEffect(() => {
@@ -33,20 +33,23 @@ function Product({ data, mobileWidth , width }: productPropType) {
   }
 
   return (
-    <div className={`w-${width} flex flex-col items-center justify-between gap-5 rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all snap-start flex-shrink-0 mobile:${mobileWidth}`}>
+    <div
+      className={`w-${width} relative flex flex-col items-center justify-between gap-5 shadow-md rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all snap-start flex-shrink-0 mobile:${mobileWidth}`}
+    >
+      <span className="absolute w-8 h-8 flex items-center justify-center top-5 right-5 text-sm borde rounded-full bg-secondary/50 text-neutral-300 mobile:right-2 mobile:top-2 mobile:w-6 mobile:h-6 mobile:text-xs">{data?.metaScore}</span>
       <img
         src={data?.image}
         alt="game card"
-        className="selection:bg-transparent h-48 w-full tablet-lg:h-36 mobile:h-32 small:h-28"
+        className="selection:bg-transparent h-48 w-full tablet-lg:h-auto mobile:h-32 small:h-auto"
       />
-      <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center small:px-1 small:text-sm">
+      <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center">
         <Link href={`/product/${data?._id}`}>بازی {data?.name}</Link>
       </p>
-      <p className="flex items-center justify-between text-white/80 text-lg px-7 mobile:text-base mobile:px-3 small:text-sm">
+      <p className="flex items-center justify-between text-white/80 text-lg px-7 mobile:text-base mobile:px-3">
         قیمت : <span>تومان {data?.price.toLocaleString()}</span>
       </p>
       <div className="w-full border-t border-zinc-700/50 flex items-center justify-between">
-        <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-rose-400/90 p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-white hover:text-orange-500 transition-all mobile:p-3 mobile:w-28 mobile:text-sm small:p-2">
+        <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-primary p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-primary/80 transition-all mobile:p-3 mobile:w-28 mobile:text-sm small:rounded-none small:flex-grow">
           افزودن به
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +66,7 @@ function Product({ data, mobileWidth , width }: productPropType) {
             />
           </svg>
         </button>
-        <button className="text-font bg-font/20 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-font hover:text-white transition-all mobile:p-3 small:p-2">
+        <button className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -75,7 +78,7 @@ function Product({ data, mobileWidth , width }: productPropType) {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+              d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
             />
           </svg>
         </button>

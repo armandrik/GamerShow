@@ -13,7 +13,7 @@ import commentModel from "../../../../models/Comments";
 import ProductModel from "../../../../models/Product";
 import connectedToDB from "../../../../config/db";
 import { cookies } from "next/headers";
-import { verifyAccessToken } from "@/utils/auth";
+import { useAuth, verifyAccessToken } from "@/utils/auth";
 import userModel from "../../../../models/User";
 
 type productPropType = {
@@ -26,21 +26,8 @@ async function Product({ params }: productPropType) {
   await connectedToDB();
 
   const productID = params.id;
-  let name : string | undefined = undefined
-
-  const token = cookies().get("token")?.value;
-  if (typeof token === "string") {
-    const tokenPayload = verifyAccessToken(token);
-    if (
-      tokenPayload &&
-      typeof tokenPayload !== "string" &&
-      "data" in tokenPayload
-    ) {
-      const userName = await userModel.findOne({ email: tokenPayload.data });
-      name = userName?.username
-    }
-  }
-
+  const user = await useAuth()
+  
   const product = await ProductModel.findOne(
     { _id: productID },
     "-__v"
@@ -77,7 +64,7 @@ async function Product({ params }: productPropType) {
         <Comments
           comments={JSON.parse(JSON.stringify(product?.comments))}
           productID={productID}
-          name={name}
+          name={user?.username}
         />
       </div>
       <Footer />

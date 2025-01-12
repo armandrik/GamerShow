@@ -1,14 +1,17 @@
-import { cookies } from "next/headers";
+import { useAuth } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
-function ForgetPasswordLayout({ children }: { children: React.ReactNode }) {
-
-    const cookie = cookies()
-    const isUserLoggedIn = cookie.get('token')
-    if(isUserLoggedIn){
-        return redirect('/')
-    }
+async function ForgetPasswordLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  
+  const user = await useAuth();
+  if (user) {
+    return redirect("/");
+  }
 
   return <div>{children}</div>;
 }

@@ -3,7 +3,7 @@ import React from "react";
 
 function RegisterButton() {
   return (
-    <button className="w-44 h-12 text-white bg-primary rounded-md font-normal hover:bg-primary/80 transition-all mobile:w-40 mobile:h-[43px]">
+    <button className="w-44 h-12 text-white bg-primary rounded-md font-normal hover:bg-primary/80 transition-all mobile:w-36 mobile:h-9">
       <Link
         href="/login-register"
         className="flex items-center justify-center gap-2 mobile:gap-1"

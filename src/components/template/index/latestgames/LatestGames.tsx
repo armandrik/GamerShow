@@ -29,7 +29,7 @@ async function LatestGames() {
             key={item._id.toString()}
             data={JSON.parse(JSON.stringify(item))}
             mobileWidth="w-52"
-            width="80"
+            width="auto"
           />
         ))}
       </div>

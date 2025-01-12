@@ -1,12 +1,12 @@
-import { cookies } from "next/headers";
+import { useAuth } from "@/utils/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
-function LoginRegisterLayout({ children }: { children: React.ReactNode }) {
-  const cookie = cookies();
-  const isUserLoggedIn = cookie.get("token");
-  if (isUserLoggedIn) {
+async function LoginRegisterLayout({ children }: { children: React.ReactNode }) {
+
+  const user = await useAuth()
+  if (user) {
     return redirect("/");
   }
 
