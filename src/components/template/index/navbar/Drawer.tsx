@@ -207,7 +207,7 @@ export default function Drawer() {
             </button>
             <button className="w-full bg-rose-500 text-white rounded-xl">
               <Link
-                href="/cart"
+                href="/wishlist"
                 className="flex items-center justify-start gap-1 font-medium text-lg pr-3 py-3 mobile:text-sm"
               >
                 <svg

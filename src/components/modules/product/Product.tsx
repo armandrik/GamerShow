@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
+import { ObjectId, Types } from "mongoose";
+import { addToWishlistService } from "@/services/addToWishlistService";
 
 type productPropType = {
   data: ProductSchemaType;
@@ -10,33 +12,24 @@ type productPropType = {
 };
 
 function Product({ data, mobileWidth, width }: productPropType) {
-  const [isLoading, setIsLoading] = useState(!data); // Initially true if no data
+  const [isAddedToWishList, setIsAddedToWishList] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (data) {
-      setIsLoading(false); // Stop loading as soon as data is available
+  const addToWishList = async (id: string | Types.ObjectId | undefined) => {
+    if (!id) {
+      console.error("ID is undefined or invalid");
+      return;
     }
-  }, [data]); // Re-run effect when data changes
+    await addToWishlistService(id);
+  };
 
-  if (isLoading) {
-    return (
-      <div className="w-80 flex flex-col items-center justify-between gap-5 rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all snap-start mobile:w-52 flex-shrink-0 animate-pulse">
-        <div className="h-48 w-full mobile:h-32 bg-gray-700"></div>
-        <div className="w-3/4 h-6 bg-gray-700 rounded-md"></div>
-        <div className="w-1/2 h-6 bg-gray-700 rounded-md"></div>
-        <div className="w-full border-t border-zinc-700/50 flex items-center justify-between">
-          <div className="w-40 h-12 bg-gray-700 rounded-br-2xl rounded-tl-2xl mobile:w-28"></div>
-          <div className="w-12 h-12 bg-gray-700 rounded-bl-2xl rounded-tr-2xl mobile:w-10"></div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div
       className={`w-${width} relative flex flex-col items-center justify-between gap-5 shadow-md rounded-2xl overflow-hidden text-xl font-medium bg-secondary transition-all snap-start flex-shrink-0 mobile:${mobileWidth}`}
     >
-      <span className="absolute w-8 h-8 flex items-center justify-center top-5 right-5 text-sm borde rounded-full bg-secondary/50 text-neutral-300 mobile:right-2 mobile:top-2 mobile:w-6 mobile:h-6 mobile:text-xs">{data?.metaScore}</span>
+      <span className="absolute w-8 h-8 flex items-center justify-center top-5 right-5 text-sm borde rounded-full bg-secondary/50 text-neutral-300 mobile:right-2 mobile:top-2 mobile:w-6 mobile:h-6 mobile:text-xs">
+        {data?.metaScore}
+      </span>
       <img
         src={data?.image}
         alt="game card"
@@ -66,28 +59,47 @@ function Product({ data, mobileWidth, width }: productPropType) {
             />
           </svg>
         </button>
-        <button className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 small:size-5"
+        {isAddedToWishList ? (
+          <button className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 small:size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m3 3 1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 0 1 1.743-1.342 48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664 19.5 19.5"
+              />
+            </svg>
+          </button>
+        ) : (
+          <button
+            onClick={() => addToWishList(data?._id)}
+            className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 small:size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+              />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
 export default Product;
-function handleMouseUp(this: HTMLElement, ev: MouseEvent) {
-  throw new Error("Function not implemented.");
-}

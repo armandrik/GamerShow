@@ -1,5 +1,6 @@
 import mongoose, { Model, Schema } from "mongoose";
 import { userSchemaType } from "../types/userSchemaType";
+import ProductModel from "./Product";
 
 const schema: Schema<userSchemaType> = new mongoose.Schema<userSchemaType>({
   username: {
@@ -20,6 +21,14 @@ const schema: Schema<userSchemaType> = new mongoose.Schema<userSchemaType>({
     type: String,
     enum: ["ADMIN", "USER"],
     default: "USER",
+  },
+  wishlist: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    default: [],
+  },
+  cart: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    default: [],
   },
 });
 
