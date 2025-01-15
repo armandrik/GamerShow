@@ -62,8 +62,9 @@ async function SimilarGames({ genre, searchParams }: similayGamesPropType) {
           <Product
             key={item._id.toString()}
             data={JSON.parse(JSON.stringify(item))}
-            mobileWidth="w-52"
+            mobileWidth="w-60"
             width="80"
+            imageHeight="h-auto"
           />
         ))}
       </div>

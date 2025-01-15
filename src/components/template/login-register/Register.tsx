@@ -26,6 +26,7 @@ function Register({ goToLogIn }: registerPropType) {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [requestStart, setRequestStart] = useState<boolean>(false);
 
   const handleChangeInputsValues = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -36,6 +37,7 @@ function Register({ goToLogIn }: registerPropType) {
 
   const signup = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setRequestStart(true);
 
     // Validate form
     const { isValid, errors } = validateRegisterForm(formData);
@@ -54,20 +56,25 @@ function Register({ goToLogIn }: registerPropType) {
           password: "",
         });
         toasMessage("با موفقیت وارد شدید", "success")();
+        setRequestStart(false);
         setTimeout(() => {
           window.location.href = "/";
         }, 400);
       } else if (response?.status === 422) {
         toasMessage("قبلا ثبت‌نام کرده‌اید", "error")();
+        setRequestStart(false);
       } else if (response?.status === 400) {
         toasMessage("مقادیر وارد شده نادرست است", "error")();
+        setRequestStart(false);
       } else {
         toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error")();
+        setRequestStart(false);
         const data = await response?.json();
         console.error(data.message || "Failed to sign up.");
       }
     } catch (error) {
       toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
+      setRequestStart(false);
       console.error("Failed to sign up. Try again.", error);
     }
   };
@@ -190,24 +197,31 @@ function Register({ goToLogIn }: registerPropType) {
           {errorMessage.password}
         </p>
         <button
+          disabled={requestStart ? true : false}
           type="submit"
           className="flex items-center justify-center gap-1 bg-primary mb-8 h-12 rounded-md text-xl font-medium hover:bg-primary/80 transition-all mobile:text-lg"
         >
-          ثبت‌نام
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-            />
-          </svg>
+          {requestStart ? (
+            <div className="custom-loader"></div>
+          ) : (
+            <>
+              ثبت‌نام
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                />
+              </svg>
+            </>
+          )}
         </button>
       </form>
       <div className="w-full flex items-center justify-between">

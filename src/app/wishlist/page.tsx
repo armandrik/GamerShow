@@ -126,6 +126,7 @@ function WishList() {
                   data={JSON.parse(JSON.stringify(item))}
                   mobileWidth="w-full"
                   width="auto"
+                  imageHeight="h-auto"
                 />
                 <button
                   onClick={() => removeFromWishlist(item?._id)}

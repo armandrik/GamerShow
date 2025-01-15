@@ -8,7 +8,7 @@ type selectedFilterPropType = {
 
 function SelectFilter({ category, options }: selectedFilterPropType) {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>();
   const buttonRef = useRef<HTMLDivElement>(null);
 
   const handleChangeOption = (e: React.MouseEvent<HTMLElement>) => {
@@ -37,7 +37,9 @@ function SelectFilter({ category, options }: selectedFilterPropType) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+
+
+  }, [selectedOption]);
 
   return (
     <div ref={buttonRef} className="relative">
@@ -58,7 +60,7 @@ function SelectFilter({ category, options }: selectedFilterPropType) {
           />
         </svg>
         <p className="pb-3 mobile:pb-2 mobile:text-sm">
-          {selectedOption.length === 0 ? category : selectedOption}
+          {!selectedOption ? category : selectedOption}
         </p>
       </div>
       {showDropDown && (

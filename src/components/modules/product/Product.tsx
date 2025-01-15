@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 import { ObjectId, Types } from "mongoose";
 import { addToWishlistService } from "@/services/addToWishlistService";
@@ -9,15 +9,20 @@ type productPropType = {
   data: ProductSchemaType;
   mobileWidth: string;
   width: string;
+  imageHeight: string;
 };
 
-function Product({ data, mobileWidth, width }: productPropType) {
+function Product({ data, mobileWidth, width, imageHeight }: productPropType) {
+  const [requestStart, setRequestStart] = useState<boolean>(false);
+
   const addToWishList = async (id: string | Types.ObjectId | undefined) => {
+    setRequestStart(true);
     if (!id) {
       console.error("ID is undefined or invalid");
       return;
     }
     await addToWishlistService(id);
+    setRequestStart(false);
   };
 
   return (
@@ -30,7 +35,7 @@ function Product({ data, mobileWidth, width }: productPropType) {
       <img
         src={data?.image}
         alt="game card"
-        className="selection:bg-transparent h-48 w-full tablet-lg:h-auto mobile:h-32 small:h-auto"
+        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:${imageHeight}`}
       />
       <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center">
         <Link href={`/product/${data?._id}`}>بازی {data?.name}</Link>
@@ -58,22 +63,27 @@ function Product({ data, mobileWidth, width }: productPropType) {
         </button>
         <button
           onClick={() => addToWishList(data?._id)}
+          disabled={requestStart ? true : false}
           className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 small:size-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-            />
-          </svg>
+          {requestStart ? (
+            <div className="custom-loader2"></div>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 small:size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+              />
+            </svg>
+          )}
         </button>
       </div>
     </div>

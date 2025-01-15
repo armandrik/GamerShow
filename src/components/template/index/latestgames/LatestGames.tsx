@@ -22,14 +22,15 @@ async function LatestGames() {
       <ScrollArrows display="hidden" elementId="scrollContainer" />
       <div
         id="scrollContainer"
-        className="grid grid-cols-5 gap-4 tv:grid-cols-4 desktop:grid-cols-3 tablet:grid-cols-2 mobile:flex mobile:snap-x mobile:snap-mandatory mobile:gap-x-[14px] mobile:no-scrollbar mobile:overflow-x-auto mobile:no-scrollbar mobile:scroll-smooth"
+        className="flex snap-x snap-mandatory gap-x-[14px] no-scrollbar overflow-x-auto no-scrollbar scroll-smooth"
       >
         {games.slice(0, 5).map((item) => (
           <Product
             key={item._id.toString()}
             data={JSON.parse(JSON.stringify(item))}
-            mobileWidth="w-52"
-            width="auto"
+            mobileWidth="w-60"
+            width="80"
+            imageHeight="h-auto"
           />
         ))}
       </div>

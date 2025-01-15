@@ -25,6 +25,7 @@ function Login({ goToRegister }: loginPropType) {
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [requestStart, setRequestStart] = useState<boolean>(false);
 
   const handleChangeInputsValues = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -35,6 +36,7 @@ function Login({ goToRegister }: loginPropType) {
 
   const logIn = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setRequestStart(true);
 
     //validate from
     const { isValid, errors } = validateLogInForm(formData);
@@ -52,22 +54,28 @@ function Login({ goToRegister }: loginPropType) {
           password: "",
         });
         toasMessage("با موفقیت وارد شدید", "success")();
+        setRequestStart(false);
         setTimeout(() => {
           window.location.href = "/";
         }, 400);
       } else if (response?.status === 400) {
         toasMessage("مقادیر وارد شده نادرست است", "error")();
+        setRequestStart(false);
       } else if (response?.status === 404) {
         toasMessage("کاربر یافت نشد", "error");
+        setRequestStart(false);
       } else if (response?.status === 401) {
         toasMessage("نام‌کاربری یا رمزعبور اشتباه است", "error")();
+        setRequestStart(false);
       } else {
         toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
+        setRequestStart(false);
         const data = await response?.json();
         console.error(data.message || "Failed to sign up.");
       }
     } catch (error) {
       toasMessage("خطایی رخ داد, دوباره تلاش کنید", "error");
+      setRequestStart(false);
       console.error("Failed to sign up. Try again.", error);
     }
   };
@@ -180,23 +188,30 @@ function Login({ goToRegister }: loginPropType) {
         </p>
         <button
           type="submit"
+          disabled={requestStart ? true : false}
           className="flex items-center justify-center gap-1 bg-primary mb-8 h-12 rounded-md text-xl font-medium hover:bg-primary/80 transition-all mobile:text-lg"
         >
-          وارد شوید
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 -rotate-45"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-            />
-          </svg>
+          {requestStart ? (
+            <div className="custom-loader"></div>
+          ) : (
+            <>
+              وارد شوید
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 -rotate-45"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+                />
+              </svg>
+            </>
+          )}
         </button>
       </form>
       <div className="w-full flex items-center justify-between">

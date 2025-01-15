@@ -25,6 +25,58 @@
     /* Firefox */
   }
 
+  .custom-loader {
+    @apply w-[70px] h-[20px] bg-white rounded-full;
+    --c: radial-gradient(farthest-side, #000 92%, #0000);
+    --s: 16px 16px;
+    -webkit-mask: 
+      var(--c) left 4px top 50%, 
+      var(--c) center, 
+      var(--c) right 4px top 50%, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-repeat: no-repeat;
+    animation: cu1 1.5s infinite;
+  }
+
+  @keyframes cu1 {
+    0%    { -webkit-mask-size: 0 0, 0 0, 0 0, auto; }
+    16.67% { -webkit-mask-size: var(--s), 0 0, 0 0, auto; }
+    33.33% { -webkit-mask-size: var(--s), var(--s), 0 0, auto; }
+    50%   { -webkit-mask-size: var(--s), var(--s), var(--s), auto; }
+    66.67% { -webkit-mask-size: 0 0, var(--s), var(--s), auto; }
+    83.33% { -webkit-mask-size: 0 0, 0 0, var(--s), auto; }
+    100%  { -webkit-mask-size: 0 0, 0 0, 0 0, auto; }
+  }
+
+  .custom-loader2 {
+    @apply w-[24px] h-[24px] rounded-full bg-[#E4E4ED] small:w-[20px] small:h-[20px];
+    --r1: 154%;
+    --r2: 68.5%;
+    background: 
+      radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #fda4af 80%),
+      radial-gradient(var(--r1) var(--r2) at bottom, #fda4af 79.5%, #0000 80%),
+      radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #fda4af 80%),
+      #E4E4ED;
+    background-size: 50.5% 220%;
+    background-position: -100% 0%, 0% 0%, 100% 0%;
+    background-repeat: no-repeat;
+    animation: p9 2s infinite linear;
+  }
+
+  @keyframes p9 {
+    33% {
+      background-position: 0% 33%, 100% 33%, 200% 33%;
+    }
+    66% {
+      background-position: -100% 66%, 0% 66%, 100% 66%;
+    }
+    100% {
+      background-position: 0% 100%, 100% 100%, 200% 100%;
+    }
+  }
+
 }
 
 .scroll-to-top {

@@ -9,6 +9,8 @@ import { useAuth } from "@/utils/auth";
 
 async function Navbar() {
   const user = await useAuth();
+  const wishlist = user?.wishlist
+  const cart = user?.cart
 
   return (
     <nav className="px-12 mt-16 mb-11 tablet:mt-5 mobile:px-4 mobile:mb-5">
@@ -42,7 +44,7 @@ async function Navbar() {
                 d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
               />
             </svg>
-            <Badge showNotif={0} bg="bg-primary" />
+            <Badge showNotif={cart?.length || 0} bg="bg-primary" />
           </Link>
           <Link href="/wishlist" className="relative">
             <svg
@@ -59,7 +61,7 @@ async function Navbar() {
                 d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
               />
             </svg>
-            <Badge showNotif={0} bg="bg-rose-500" />
+            <Badge showNotif={wishlist?.length || 0} bg="bg-rose-500" />
           </Link>
           <div>{user ? <AccountButton /> : <RegisterButton />}</div>
         </div>
