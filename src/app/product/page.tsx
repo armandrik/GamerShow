@@ -26,7 +26,6 @@ async function Games() {
             data={JSON.parse(JSON.stringify(item))}
             mobileWidth="w-full"
             width="auto"
-            imageHeight="auto"
           />
         ))}
       </div>

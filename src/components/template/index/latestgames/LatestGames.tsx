@@ -30,7 +30,6 @@ async function LatestGames() {
             data={JSON.parse(JSON.stringify(item))}
             mobileWidth="w-60"
             width="80"
-            imageHeight="auto"
           />
         ))}
       </div>

@@ -2,17 +2,16 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
-import { ObjectId, Types } from "mongoose";
+import { Types } from "mongoose";
 import { addToWishlistService } from "@/services/addToWishlistService";
 
 type productPropType = {
   data: ProductSchemaType;
   mobileWidth: string;
   width: string;
-  imageHeight: string;
 };
 
-function Product({ data, mobileWidth, width, imageHeight }: productPropType) {
+function Product({ data, mobileWidth, width }: productPropType) {
   const [requestStart, setRequestStart] = useState<boolean>(false);
 
   const addToWishList = async (id: string | Types.ObjectId | undefined) => {
@@ -35,8 +34,7 @@ function Product({ data, mobileWidth, width, imageHeight }: productPropType) {
       <img
         src={data?.image}
         alt="game card"
-        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:h-${imageHeight}`}
-      />
+        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:h-auto`}/>
       <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center">
         <Link href={`/product/${data?._id}`}>بازی {data?.name}</Link>
       </p>
