@@ -37,11 +37,41 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ message: "Unauthorized: user missing" }, { status: 401 })
         }
 
-        const wishList = await userModel.findOne({_id : user._id} , "wishlist")
+        const wishList = await userModel.findOne({ _id: user._id }, "wishlist").populate('wishlist')
 
-        return NextResponse.json({wishList} , {status : 200})
+        return NextResponse.json({ wishList }, { status: 200 })
 
     } catch (error) {
+        return NextResponse.json({ message: "internal server error" }, { status: 500 })
+    }
+}
+
+export async function PATCH(req: NextRequest) {
+    try {
+        connectedToDB()
+
+        const body = await req.json()
+        const { id } = body
+
+        const user = await useAuth()
+        if (!user) {
+            return NextResponse.json({ message: "Unauthorized: user missing" }, { status: 401 })
+        }
+
+        const updatedUser = await userModel.findOneAndUpdate({ _id: user._id }, { $pull: { wishlist: id } }, { new: true })
+        if (!updatedUser) {
+            return NextResponse.json({ message: "User not found or wishlist update failed" }, { status: 404 });
+        }
+
+        console.log(updatedUser.wishlist)
+
+        return NextResponse.json(
+            { message: "Product removed from wishlist", wishlist: updatedUser.wishlist },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.error("Error in DELETE API:", error);
         return NextResponse.json({ message: "internal server error" }, { status: 500 })
     }
 }

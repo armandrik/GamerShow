@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 import { ObjectId, Types } from "mongoose";
 import { addToWishlistService } from "@/services/addToWishlistService";
@@ -12,8 +12,6 @@ type productPropType = {
 };
 
 function Product({ data, mobileWidth, width }: productPropType) {
-  const [isAddedToWishList, setIsAddedToWishList] = useState<boolean>(false);
-
   const addToWishList = async (id: string | Types.ObjectId | undefined) => {
     if (!id) {
       console.error("ID is undefined or invalid");
@@ -21,7 +19,6 @@ function Product({ data, mobileWidth, width }: productPropType) {
     }
     await addToWishlistService(id);
   };
-
 
   return (
     <div
@@ -59,44 +56,25 @@ function Product({ data, mobileWidth, width }: productPropType) {
             />
           </svg>
         </button>
-        {isAddedToWishList ? (
-          <button className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6 small:size-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m3 3 1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 0 1 1.743-1.342 48.507 48.507 0 0 1 11.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664 19.5 19.5"
-              />
-            </svg>
-          </button>
-        ) : (
-          <button
-            onClick={() => addToWishList(data?._id)}
-            className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none"
+        <button
+          onClick={() => addToWishList(data?._id)}
+          className="text-white bg-rose-500 p-5 pointer-events-auto rounded-bl-2xl rounded-tr-2xl font-medium hover:bg-rose-500/80 hover:text-white transition-all mobile:p-3 small:rounded-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6 small:size-5"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6 small:size-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-              />
-            </svg>
-          </button>
-        )}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );
