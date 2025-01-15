@@ -126,12 +126,13 @@ function WishList() {
                   data={JSON.parse(JSON.stringify(item))}
                   mobileWidth="w-full"
                   width="auto"
-                  imageHeight="h-auto"
+                  imageHeight="auto"
                 />
                 <button
                   onClick={() => removeFromWishlist(item?._id)}
-                  className="absolute left-2 top-2 flex items-center justify-center bg-rose-500/50 w-9 h-9 rounded-full text-white hover:bg-rose-500 transition-all"
+                  className="absolute left-2 top-2 flex items-center justify-center bg-rose-500/50 w-20 h-9 rounded-full text-white hover:bg-rose-500 transition-all"
                 >
+                  <p className="text-sm font-medium mobile:text-xs">حذف</p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

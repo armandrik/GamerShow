@@ -35,7 +35,7 @@ function Product({ data, mobileWidth, width, imageHeight }: productPropType) {
       <img
         src={data?.image}
         alt="game card"
-        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:${imageHeight}`}
+        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:h-${imageHeight}`}
       />
       <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center">
         <Link href={`/product/${data?._id}`}>بازی {data?.name}</Link>

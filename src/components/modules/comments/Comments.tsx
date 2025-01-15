@@ -21,12 +21,14 @@ type commentsPropType = {
 
 function Comments({ comments, productID, name }: commentsPropType) {
   const [body, setBody] = useState("");
+  const [requestStart, setRequestStart] = useState<boolean>(false);
 
   const handleCommentSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setRequestStart(true);
     if (!name) {
       toasMessage("ابتدا وارد اکانت شوید", "error")();
+      setRequestStart(false);
       setTimeout(() => {
         window.location.href = "/login-register";
       }, 600);
@@ -40,17 +42,21 @@ function Comments({ comments, productID, name }: commentsPropType) {
       if (response.status === 201) {
         setBody("");
         toasMessage("نظر ثبت شد", "success")();
+        setRequestStart(false);
         setTimeout(() => {
           window.location.reload();
         }, 400);
       } else if (response.status === 400) {
         toasMessage("مقادیر وارد شده اشتباه است", "error")();
+        setRequestStart(false);
       } else {
         toasMessage("دوباره تلاش کنید", "error")();
+        setRequestStart(false);
       }
     } catch (error) {
       console.error(error);
       toasMessage("دوباره تلاش کنید", "error")();
+      setRequestStart(false);
     }
   };
 
@@ -69,17 +75,22 @@ function Comments({ comments, productID, name }: commentsPropType) {
           ></textarea>
           <button
             type="submit"
-            className="inline-flex justify-center p-3 rounded-full cursor-pointer hover:bg-primary/20 transition-all"
+            disabled={requestStart ? true : false}
+            className="inline-flex justify-center p-3 rounded-full hover:bg-primary/20 transition-all"
           >
-            <svg
-              className="size-5 -rotate-90 text-primary"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 18 20"
-            >
-              <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
-            </svg>
+            {requestStart ? (
+              <div className="custom-loader3"></div>
+            ) : (
+              <svg
+                className="size-5 -rotate-90 text-primary"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 18 20"
+              >
+                <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
+              </svg>
+            )}
           </button>
         </div>
       </form>
