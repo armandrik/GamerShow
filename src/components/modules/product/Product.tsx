@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 import { Types } from "mongoose";
 import { addToWishlistService } from "@/services/addToWishlistService";
+import { addToCartService } from "@/services/addToCartService";
+import { toasMessage } from "@/utils/helper";
 
 type productPropType = {
   data: ProductSchemaType;
@@ -13,15 +15,27 @@ type productPropType = {
 
 function Product({ data, mobileWidth, width }: productPropType) {
   const [requestStart, setRequestStart] = useState<boolean>(false);
+  const [cartRequestStart, setCartRequestStart] = useState<boolean>(false);
 
   const addToWishList = async (id: string | Types.ObjectId | undefined) => {
     setRequestStart(true);
     if (!id) {
       console.error("ID is undefined or invalid");
+      toasMessage("مشخصه بازی نامعتبر است", "error")();
       return;
     }
     await addToWishlistService(id);
     setRequestStart(false);
+  };
+
+  const addToCart = async (id: string | Types.ObjectId | undefined) => {
+    setCartRequestStart(true);
+    if (!id) {
+      console.error("ID is undefined or invalid");
+      return;
+    }
+    await addToCartService(id);
+    setCartRequestStart(false);
   };
 
   return (
@@ -34,7 +48,8 @@ function Product({ data, mobileWidth, width }: productPropType) {
       <img
         src={data?.image}
         alt="game card"
-        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:h-auto`}/>
+        className={`selection:bg-transparent h-48 w-full tablet-lg:h-40 mobile:h-32 small:h-auto`}
+      />
       <p className="text-white text-xl py-3 cursor-pointer pointer-events-auto hover:text-white/70 transition-all mobile:text-base mobile:py-0 mobile:text-center">
         <Link href={`/product/${data?._id}`}>بازی {data?.name}</Link>
       </p>
@@ -42,22 +57,32 @@ function Product({ data, mobileWidth, width }: productPropType) {
         قیمت : <span>تومان {data?.price.toLocaleString()}</span>
       </p>
       <div className="w-full border-t border-zinc-700/50 flex items-center justify-between">
-        <button className="flex items-center justify-center gap-1 text-white text-base w-40 bg-primary p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-primary/80 transition-all mobile:p-3 mobile:w-28 mobile:text-sm small:rounded-none small:flex-grow">
-          افزودن به
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 small:size-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-            />
-          </svg>
+        <button
+          onClick={() => addToCart(data?._id)}
+          disabled={cartRequestStart ? true : false}
+          className="flex items-center justify-center gap-1 text-white text-base w-40 bg-primary p-5 pointer-events-auto rounded-br-2xl rounded-tl-2xl font-medium hover:bg-primary/80 transition-all mobile:p-3 mobile:w-28 mobile:text-sm small:rounded-none small:flex-grow"
+        >
+          {cartRequestStart ? (
+            <div className="custom-loader"></div>
+          ) : (
+            <>
+              افزودن به
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6 small:size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                />
+              </svg>
+            </>
+          )}
         </button>
         <button
           onClick={() => addToWishList(data?._id)}

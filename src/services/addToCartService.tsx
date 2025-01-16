@@ -1,10 +1,10 @@
 import { toasMessage } from "@/utils/helper";
 import { Types } from "mongoose";
-export const addToWishlistService = async (
+export const addToCartService = async (
   id: string | Types.ObjectId | undefined
 ) => {
   try {
-    const response = await fetch("/api/wishlist", {
+    const response = await fetch("/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const addToWishlistService = async (
     });
 
     if (response.status === 201) {
-      toasMessage("لیست علاقه‌مندی آپدیت شد", "success")();
+      toasMessage("سبدخرید آپدیت شد", "success")();
     } else if (response.status === 200) {
       toasMessage("این بازی قبلا اضافه شده", "success")();
     } else if (response.status === 401) {

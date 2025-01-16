@@ -19,7 +19,7 @@ async function LatestGames() {
           <Link href="/product">مشاهده همه</Link>
         </button>
       </div>
-      <ScrollArrows display="hidden" elementId="scrollContainer" />
+      <ScrollArrows display="flex" elementId="scrollContainer" />
       <div
         id="scrollContainer"
         className="flex snap-x snap-mandatory gap-x-[14px] no-scrollbar overflow-x-auto no-scrollbar scroll-smooth"

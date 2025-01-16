@@ -21,7 +21,7 @@ function WishList() {
     id: string | undefined | Types.ObjectId
   ) => {
     try {
-      const res = await fetch("api/wishlist", {
+      const req = await fetch("api/wishlist", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -29,23 +29,22 @@ function WishList() {
         body: JSON.stringify({ id }),
       });
 
-      if (res.status === 200) {
+      if (req.status === 200) {
         toasMessage("آیتم با موفقیت حذف شد", "success")();
-        setTimeout(() => {
-          window.location.reload();
-        }, 400);
-      } else if (res.status === 401) {
+        const res = await req.json();
+        setData(res.wishList);
+      } else if (req.status === 401) {
         toasMessage("ابتدا وارد اکانت شوید", "error")();
         setTimeout(() => {
           window.location.href = "/login-register";
         }, 500);
-      } else if (res.status === 404) {
+      } else if (req.status === 404) {
         toasMessage("دوباره سعی‌ کنید", "error")();
       } else {
         console.error(
           "Failed to remove product:",
-          res.status,
-          await res.text()
+          req.status,
+          await req.text()
         );
         toasMessage("دوباره سعی‌ کنید", "error")();
       }
@@ -58,16 +57,22 @@ function WishList() {
   useEffect(() => {
     setLoading(true);
     const getWishlist = async () => {
-      const req = await fetch("api/wishlist");
-      if (req.status === 200) {
-        const res = await req.json();
-        setData(res.wishList);
+      try {
+        const req = await fetch("api/wishlist");
+        if (req.status === 200) {
+          const res = await req.json();
+          setData(res.wishList);
+        } else {
+          toasMessage("دوباره تلاش کنید", "error")();
+          setTimeout(() => {
+            redirect("/");
+          }, 600);
+        }
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        toasMessage("خطایی رخ داد", "error")();
+      } finally {
         setLoading(false);
-      } else {
-        toasMessage("دوباره تلاش کنید", "error")();
-        setTimeout(() => {
-          redirect("/");
-        }, 600);
       }
     };
     getWishlist();
