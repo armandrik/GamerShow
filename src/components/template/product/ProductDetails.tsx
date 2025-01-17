@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { ProductSchemaType } from "../../../../types/ProductSchemaType";
 import { addToWishlistService } from "@/services/addToWishlistService";
 import { Types } from "mongoose";
+import { addToCartService } from "@/services/addToCartService";
 
 type productDetailsPropType = {
   data: ProductSchemaType;
 };
 
 function ProductDetails({ data }: productDetailsPropType) {
-  const date = new Date(data.released);
+  const date = new Date(data?.released);
 
   const formattedDate = date.toLocaleDateString("en-US", {
     month: "short",
@@ -18,6 +19,7 @@ function ProductDetails({ data }: productDetailsPropType) {
   });
 
   const [requestStart, setRequestStart] = useState<boolean>(false);
+  const [CartRequestStart, setCartRequestStart] = useState<boolean>(false);
 
   const addToWishList = async (id: string | Types.ObjectId | undefined) => {
     setRequestStart(true);
@@ -27,6 +29,16 @@ function ProductDetails({ data }: productDetailsPropType) {
     }
     await addToWishlistService(id);
     setRequestStart(false);
+  };
+
+  const addToCart = async (id: string | Types.ObjectId | undefined) => {
+    setCartRequestStart(true);
+    if (!id) {
+      console.error("ID is undefined or invalid");
+      return;
+    }
+    await addToCartService(id);
+    setCartRequestStart(false);
   };
 
   return (
@@ -86,30 +98,40 @@ function ProductDetails({ data }: productDetailsPropType) {
         <p className="text-sm text-white/60">
           امتیاز متا :{" "}
           <span className="border border-emerald-600 p-1 rounded-md font-medium text-emerald-600">
-            {data.metaScore}
+            {data?.metaScore}
           </span>
         </p>
         <p className="font-semibold text-2xl text-white/80">
           {data?.price.toLocaleString()} هزار تومان
         </p>
       </div>
-      <div className="flex-col items-start justify-between mt-10 [&>*]:w-full [&>*]:font-medium [&>*]:text-lg [&>*]:py-3 [&>*]:rounded [&>*]:transition-all desktop:mt-9 mobile:[&>*]:text-base">
-        <button className="bg-primary mb-5 hover:bg-primary/80 flex items-center justify-center gap-1">
-          افزودن به سبد خرید
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-            />
-          </svg>
+      <div className="flex-col items-start justify-between mt-10 [&>*]:w-full [&>*]:font-medium [&>*]:text-lg [&>*]:h-12 [&>*]:rounded [&>*]:transition-all desktop:mt-9 mobile:[&>*]:text-base">
+        <button
+          onClick={() => addToCart(data?._id)}
+          disabled={CartRequestStart ? true : false}
+          className="bg-primary mb-5 hover:bg-primary/80 flex items-center justify-center gap-1"
+        >
+          {CartRequestStart ? (
+            <div className="custom-loader"></div>
+          ) : (
+            <>
+              افزودن به سبد خرید
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                />
+              </svg>
+            </>
+          )}
         </button>
         <button
           onClick={() => addToWishList(data?._id)}

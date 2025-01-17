@@ -15,6 +15,7 @@ function SelectFilter({ category, options }: selectedFilterPropType) {
     const value = (e.target as HTMLInputElement).textContent;
     if (value) {
       setSelectedOption(value);
+      window.location.href = `/product?sort=${value}`;
     }
     setShowDropDown(false);
   };
