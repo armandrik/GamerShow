@@ -11,7 +11,7 @@ function MenuItem() {
         <Link href="/product">فروشگاه</Link>
       </li>
       <li>
-        <Link href="/contact-us">تماس با‌ما</Link>
+        <Link href="/">تماس با‌ما</Link>
       </li>
       <li>
         <Link href="/blogs">وبلاگ</Link>

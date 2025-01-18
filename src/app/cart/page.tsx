@@ -48,7 +48,7 @@ function Cart() {
 
   return (
     <div className="px-12 mobile:px-4">
-      <h1 className="text-white font-bold mt-10 mb-24 text-2xl mobile:text-xl">
+      <h1 className="text-white font-bold mt-10 mb-24 text-2xl mobile:text-xl mobile:mb-10">
         سبدخرید
       </h1>
       {data?.cart.length === 0 ? (

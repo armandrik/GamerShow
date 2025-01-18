@@ -121,7 +121,7 @@ function WishList() {
           </button>
         </div>
       ) : (
-        <div className="px-12 my-[77px] grid grid-cols-5 gap-5 tv:grid-cols-4 desktop:grid-cols-3 tablet:grid-cols-2 mobile:gap-3 small:grid-cols-1 mobile:px-4">
+        <div className="px-12 my-[77px] grid grid-cols-5 gap-5 tv:grid-cols-4 desktop:grid-cols-3 tablet:grid-cols-2 mobile:gap-3 small:grid-cols-1 mobile:px-4 mobile:mt-10">
           {loading ? (
             <ProductSkeleton />
           ) : (

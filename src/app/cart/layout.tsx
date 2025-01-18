@@ -5,6 +5,13 @@ import Footer from "../../components/modules/footer/Footer";
 import { useAuth } from "@/utils/auth";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "سبد خرید | Gamer Show",
+  icons: {
+    icon: "/images/logo.svg",
+  },
+};
+
 async function WishlistLaout({ children }: { children: React.ReactNode }) {
   const user = await useAuth();
   

@@ -17,6 +17,14 @@ import userModel from "../../../../models/User";
 import { redirect } from "next/navigation";
 import mongoose from "mongoose";
 
+export const metadata = {
+  title: "بازی های فروشگاه | Gamer Show",
+  describtion: "مشخصات و توضیحات بازی با امکان ثبت نظر",
+  icons: {
+    icon: "/images/logo.svg",
+  },
+};
+
 type productPropType = {
   params: {
     id: string;

@@ -3,6 +3,14 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
+export const metadata = {
+  title: "صفحه ورود و ثبت‌نام | Gamer Show",
+  describtion: "ساخت و ورود به اکانت گیمرشو",
+  icons: {
+    icon: "/images/logo.svg",
+  },
+};
+
 async function LoginRegisterLayout({ children }: { children: React.ReactNode }) {
 
   const user = await useAuth()
